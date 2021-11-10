@@ -1,14 +1,17 @@
 package com.winningwomen.supermercadoYara.dto.request;
 
+import com.winningwomen.supermercadoYara.model.Categoria;
 import lombok.Data;
+import java.math.BigDecimal;
 
 @Data
 public class ProdutoRequest {
-	//dados necessarios para criar produtos
+
 	private String nome;
 	private int quantidade;
-	private float preco;
-	
-	private Long idCategoria;
-	
+	private BigDecimal preco;
+	private long idCategoria;
+	private String descricao;
+	private String imagem;
+
 }
