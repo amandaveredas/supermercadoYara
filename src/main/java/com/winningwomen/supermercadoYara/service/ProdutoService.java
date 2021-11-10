@@ -13,16 +13,27 @@ import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
 @Service
 public class ProdutoService {
 	
+
+	private ProdutoRepository repository;
+	private CategoriaService categoriaService;
+
 	@Autowired
-	ProdutoRepository produtoRepository;
-	@Autowired
-	CategoriaRepository categoriaRepository;
-	
-	public ProdutoResponse create(ProdutoRequest produtoRequest) {
-		Categoria categoria = this.categoriaRepository.findById(produtoRequest.getIdCategoria()).orElseThrow(RuntimeException::new);
-		Produto produto = new Produto(produtoRequest, categoria);
-		Produto produtoCreated = this.produtoRepository.save(produto);
-		return new ProdutoResponse(produtoCreated);
+	public ProdutoService(ProdutoRepository produtoRepository) {
+		this.repository = produtoRepository;
 	}
 
+	public void cadastrar(ProdutoRequest produtoRequest) {
+
+		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
+		Produto produto = Produto.builder()
+				.nome(produtoRequest.getNome())
+				.categoria(categoria)
+				.descricao(produtoRequest.getDescricao())
+				.quantidade(produtoRequest.getQuantidade())
+				.preco(produtoRequest.getPreco())
+				.imagem(produtoRequest.getImagem())
+				.build();
+
+		repository.save(produto);
+    }
 }

@@ -1,40 +1,36 @@
 package com.winningwomen.supermercadoYara.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+
 @Data
 @Entity
 @Table(name="produto")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Produto {
-
-	public Produto(ProdutoRequest produtoRequest, Categoria categoria) {
-		this.setNome(produtoRequest.getNome());
-		this.setPreco(produtoRequest.getPreco());
-		this.setQuantidade(produtoRequest.getQuantidade());
-		this.setCategoria(categoria);
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull
 	private String nome;
+	@NotNull
 	private int quantidade;
-	private float preco;
+	@NotNull
+	private BigDecimal preco;
+	private String descricao;
+	private String imagem;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoria_id")
-	@JsonIgnore 
 	private Categoria categoria;
 	
 }
