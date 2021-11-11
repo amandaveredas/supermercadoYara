@@ -2,6 +2,8 @@ package com.winningwomen.supermercadoYara.controller;
 
 import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
 import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
+import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
+import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
 import com.winningwomen.supermercadoYara.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,7 @@ public class ProdutoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarProduto(@RequestBody @Valid ProdutoRequest produtoRequest){
+	public void cadastrarProduto(@RequestBody @Valid ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
 		produtoService.cadastrar(produtoRequest);
 	}
 

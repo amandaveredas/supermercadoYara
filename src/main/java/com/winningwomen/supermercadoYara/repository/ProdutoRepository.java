@@ -8,4 +8,5 @@ import com.winningwomen.supermercadoYara.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 
+    boolean existsByNome(String nome);
 }
