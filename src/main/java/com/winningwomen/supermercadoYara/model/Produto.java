@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -20,12 +21,10 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+
 	private String nome;
-	@NotNull
-	private int quantidade;
-	@NotNull
-	private BigDecimal preco;
+	private Integer quantidade;
+	private BigDecimal precoUnitario;
 	private String descricao;
 	private String imagem;
 	
