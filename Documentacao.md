@@ -51,3 +51,30 @@ ___
 			* Caso já exista outro usuário com o e-mail informado, deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
 			* Mensagem: ```Já existe um produto cadastrado com o nome '{substituir-por-nome-informado}'.```
 
+
+	2.1. Listagem de produtos
+	 
+	 * Assinatura	 	
+	 	*  GET/produtos
+ 
+	* Parâmetros de entrada
+	 	
+	 	* Body: Vazio
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: List < ProdutoResponse >
+
+		* ProdutoResponse:	 		
+	 		* nome
+			* nomeCategoria
+			* descricao
+			* quantidade
+			* precoUnitario
+			* imagem
+		
+	* Comportamentos:
+		*  Caso nenhum produto seja localizado, retorna uma lista vazia. 
+
+		 
+	

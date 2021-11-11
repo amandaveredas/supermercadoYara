@@ -2,14 +2,7 @@ package com.winningwomen.supermercadoYara.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 @Data
@@ -25,8 +18,8 @@ public class Usuario {
 	private String email;
 	private String senha;
 	private Date data_criacao;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "funcao_id")
 	private Funcao funcao;
 

@@ -16,7 +16,7 @@ import com.winningwomen.supermercadoYara.repository.CategoriaRepository;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value="/categoria")
+@RequestMapping(value="/categorias")
 public class CategoriaController {
 	
 
