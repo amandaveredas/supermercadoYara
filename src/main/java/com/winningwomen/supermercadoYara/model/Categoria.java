@@ -26,4 +26,5 @@ public class Categoria {
 	@NotNull(message = "Campo nome não pode ser nulo.")
 	private String nome;
 
+
 }
