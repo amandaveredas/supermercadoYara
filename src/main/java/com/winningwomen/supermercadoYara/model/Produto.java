@@ -28,7 +28,7 @@ public class Produto {
 	private String descricao;
 	private String imagem;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	

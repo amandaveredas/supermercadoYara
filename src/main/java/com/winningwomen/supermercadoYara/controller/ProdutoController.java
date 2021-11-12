@@ -13,9 +13,10 @@ import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
-@RequestMapping(value="/produto")
+@RequestMapping(value="/produtos")
 public class ProdutoController {
 	
 	private ProdutoService produtoService;
@@ -30,5 +31,11 @@ public class ProdutoController {
 	public void cadastrarProduto(@RequestBody @Valid ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
 		produtoService.cadastrar(produtoRequest);
 	}
+
+	@GetMapping
+	public List<ProdutoResponse> listarTodosProdutos () {
+		return produtoService.listarTodos();
+	}
+
 
 }

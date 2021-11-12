@@ -27,9 +27,4 @@ public class Categoria {
 	@NotNull(message = "Campo nome não pode ser nulo.")
 	private String nome;
 
-
-	public long getId(){return id;}
-	public void setId(long Id){this.id = id;}
-	public String getNome(){return nome;}
-	public void setNome(String nome){this.nome = nome;}
 }

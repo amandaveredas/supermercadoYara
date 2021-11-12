@@ -33,8 +33,9 @@ public class Usuario {
     @Column(name = "data_criacao", updatable = false)
     @Timestamp
 	private LocalDate data_criacao;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne(cascade = CascadeType.ALL)
+
 	@JoinColumn(name = "funcao_id")
 	private Funcao funcao;
 
