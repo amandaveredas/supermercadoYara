@@ -1,10 +1,6 @@
 package com.winningwomen.supermercadoYara.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 @Data
@@ -15,6 +11,10 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@Column(nullable = false, length = 50)
 	private String nome;
 
+	public String getNome(){return nome;}
+	public void setNome(String nome){this.nome = nome;}
 }
