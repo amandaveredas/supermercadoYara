@@ -8,4 +8,5 @@ import com.winningwomen.supermercadoYara.model.Categoria;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
+    boolean existsByNome(String nome);
 }

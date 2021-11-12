@@ -2,12 +2,15 @@ package com.winningwomen.supermercadoYara.dto.response;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ProdutoResponse {
 
-	private Long id;
 	private String nome;
 	private int quantidade;
-	private float preco;
-	
+	private BigDecimal preco;
+	private long idCategoria;
+	private String descricao;
+	private String imagem;
 }

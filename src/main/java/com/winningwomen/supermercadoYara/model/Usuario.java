@@ -1,7 +1,6 @@
 package com.winningwomen.supermercadoYara.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.*;
 
@@ -33,13 +32,14 @@ public class Usuario {
 
     @Column(name = "data_criacao", updatable = false)
     @Timestamp
-	private Date data_criacao = new Date();
+	private LocalDate data_criacao;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "funcao_id")
 	private Funcao funcao;
 
-
+    @PrePersist
+    public void prePersist(){setData_criacao((LocalDate.now()));}
     public long getId(){return id;}
     public void setId(long Id){this.id = id;}
     public String getUser_name(){return user_name;}
@@ -52,6 +52,6 @@ public class Usuario {
     public void setEmail(String email){this.email = email;}
     public String getSenha(){return senha;}
     public void setSenha(String senha){this.senha = senha;}
-    public Date getData_criacao(){return data_criacao = data_criacao;}
-    public void setData_criacao(Date data_criacao){this.data_criacao = data_criacao;}
+    public LocalDate getData_criacao(){return data_criacao = data_criacao;}
+    public void setData_criacao(LocalDate data_criacao){this.data_criacao = data_criacao;}
 }
