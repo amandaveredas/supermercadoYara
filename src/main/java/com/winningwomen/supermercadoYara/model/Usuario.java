@@ -4,12 +4,25 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
+
 import jdk.jfr.Timestamp;
 import lombok.Data;
+
 @Data
 @Entity
 @Table(name="usuario")
 public class Usuario {
+	
+	public Usuario(UsuarioRequest usuarioRequest, Funcao funcao) {
+		this.setUser_name(usuarioRequest.getUser_name());
+		this.setNome(usuarioRequest.getNome());
+		this.setSobrenome(usuarioRequest.getSobrenome());
+		this.setEmail(usuarioRequest.getEmail());
+		this.setSenha(usuarioRequest.getSenha());
+		this.setData_criacao(usuarioRequest.getData_criacao());
+		this.setFuncao(funcao);
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,8 +54,6 @@ public class Usuario {
 
     @PrePersist
     public void prePersist(){setData_criacao((LocalDate.now()));}
-    public long getId(){return id;}
-    public void setId(long Id){this.id = id;}
     public String getUser_name(){return user_name;}
     public void setUser_name(String user_name){this.user_name = user_name;}
     public String getNome(){return nome;}
