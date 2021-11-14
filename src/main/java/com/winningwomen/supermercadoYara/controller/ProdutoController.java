@@ -4,6 +4,7 @@ import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
 import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
 import com.winningwomen.supermercadoYara.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,11 @@ public class ProdutoController {
 	@GetMapping
 	public List<ProdutoResponse> listarTodosProdutos () {
 		return produtoService.listarTodosOrdemAlfabetica();
+	}
+
+	@PutMapping("/{id}")
+	public ProdutoResponse alterarProduto(@PathVariable Long id, @RequestBody @Valid ProdutoRequest produtoRequest) throws CategoriaNaoExisteException, ProdutoNaoExisteException {
+		return produtoService.alterar(id, produtoRequest);
 	}
 
 

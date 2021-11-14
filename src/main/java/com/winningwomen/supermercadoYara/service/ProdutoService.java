@@ -3,6 +3,7 @@ package com.winningwomen.supermercadoYara.service;
 import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
 import com.winningwomen.supermercadoYara.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,4 +62,33 @@ public class ProdutoService {
 
 		return listaProdutosResponse;
 	}
+
+	public ProdutoResponse alterar(Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException {
+		if(!repository.existsById(id))
+			throw new ProdutoNaoExisteException(id);
+		Produto produto = repository.findById(id).get();
+		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
+
+		produto.setNome(produtoRequest.getNome());
+		produto.setCategoria(categoria);
+		produto.setDescricao(produtoRequest.getDescricao());
+		produto.setQuantidade(produtoRequest.getQuantidade());
+		produto.setPrecoUnitario(produtoRequest.getPrecoUnitario());
+		produto.setImagem(produtoRequest.getImagem());
+
+		repository.save(produto);
+
+		ProdutoResponse produtoResponse = ProdutoResponse.builder()
+				.nome(produto.getNome())
+				.nomeCategoria(categoria.getNome())
+				.descricao(produto.getDescricao())
+				.quantidade(produto.getQuantidade())
+				.precoUnitario(produto.getPrecoUnitario())
+				.imagem(produto.getImagem())
+				.build();
+
+		return  produtoResponse;
+	}
+
+
 }
