@@ -45,5 +45,8 @@ public class ProdutoController {
 		produtoService.excluir(id);
 	}
 
-
+	@PostMapping("/exportar")
+	public void exportarExcel(){
+		produtoService.exportar();
+	}
 }

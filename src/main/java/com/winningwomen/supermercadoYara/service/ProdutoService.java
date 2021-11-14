@@ -5,6 +5,10 @@ import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosExc
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
 import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
 import com.winningwomen.supermercadoYara.model.Categoria;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,10 @@ import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -103,4 +111,80 @@ public class ProdutoService {
 		repository.deleteById(id);
 
     }
+
+	public void exportar() {
+		String caminhoDiretorio = criaCaminhoDiretorio();
+		String caminhoArquivo = criaCaminhoArquivo("produtos.xls",caminhoDiretorio);
+		criaDiretorioSeNaoExistir(caminhoDiretorio);
+
+
+		List<ProdutoResponse> produtos = listarTodosOrdemAlfabetica();
+		List<String> cabecalhos = Arrays.asList("Nome", "Categoria", "Descrição","Quantidade", "Preço", "Imagem");
+		HSSFWorkbook workbook = criaPlanilha(produtos, cabecalhos);
+
+		try{
+			FileOutputStream out = new FileOutputStream(caminhoArquivo);
+			workbook.write(out);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
+	private HSSFWorkbook criaPlanilha(List<ProdutoResponse> produtos, List<String> cabecalhos) {
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet("Produtos");
+
+		int rownum = 0;
+		int cellnum = 0;
+		Row row = sheet.createRow(rownum++);
+
+		for(String s: cabecalhos){
+			Cell cell = row.createCell(cellnum++);
+			cell.setCellValue(s);
+		}
+
+		for(ProdutoResponse p : produtos){
+			row = sheet.createRow(rownum++);
+			cellnum = 0;
+			Cell cellNome = row.createCell(cellnum++);
+			cellNome.setCellValue(p.getNome());
+			Cell cellCategoria = row.createCell(cellnum++);
+			cellCategoria.setCellValue(p.getNomeCategoria());
+			Cell cellDescricao = row.createCell(cellnum++);
+			cellDescricao.setCellValue(p.getDescricao());
+			Cell cellQuantidade = row.createCell(cellnum++);
+			cellQuantidade.setCellValue(p.getQuantidade());
+			Cell cellPreco = row.createCell(cellnum++);
+			cellPreco.setCellValue(p.getPrecoUnitario().doubleValue());
+			Cell cellImagem = row.createCell(cellnum++);
+			cellImagem.setCellValue(p.getImagem());
+		}
+
+		return workbook;
+	}
+
+	private void criaDiretorioSeNaoExistir(String caminhoDiretorio) {
+		File file = new File(caminhoDiretorio);
+		if(!file.exists())
+			file.mkdirs();
+	}
+
+	private String criaCaminhoArquivo(String nomeArquivo, String diretorio){
+		String separador = System.getProperty("file.separator");
+		String arquivo = diretorio + separador + nomeArquivo;
+
+		return arquivo;
+	}
+
+	private String criaCaminhoDiretorio() {
+		String separador = System.getProperty("file.separator");
+		final String diretorio = System.getProperty("user.home")
+				+ separador + "Documentos"
+				+ separador +"vilayara"
+				+ separador +"exports";
+		return diretorio;
+	}
 }
