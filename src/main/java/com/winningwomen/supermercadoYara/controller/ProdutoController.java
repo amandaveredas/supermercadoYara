@@ -40,5 +40,10 @@ public class ProdutoController {
 		return produtoService.alterar(id, produtoRequest);
 	}
 
+	@DeleteMapping("/{id}")
+	public void excluirProduto(@PathVariable Long id) throws ProdutoNaoExisteException {
+		produtoService.excluir(id);
+	}
+
 
 }
