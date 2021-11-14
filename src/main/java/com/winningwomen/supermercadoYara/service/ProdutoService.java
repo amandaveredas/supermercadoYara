@@ -12,7 +12,9 @@ import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
 import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
 
+import javax.transaction.Transactional;
 import java.util.*;
+
 
 @Service
 public class ProdutoService {
@@ -64,9 +66,7 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponse alterar(Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException {
-		if(!repository.existsById(id))
-			throw new ProdutoNaoExisteException(id);
-		Produto produto = repository.findById(id).get();
+		Produto produto = buscaProduto(id);
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
 
 		produto.setNome(produtoRequest.getNome());
@@ -90,5 +90,17 @@ public class ProdutoService {
 		return  produtoResponse;
 	}
 
+	private Produto buscaProduto(Long id) throws ProdutoNaoExisteException {
+		if(!repository.existsById(id))
+			throw new ProdutoNaoExisteException(id);
+		Produto produto = repository.findById(id).get();
+		return produto;
+	}
 
+	@Transactional
+	public void excluir(Long id) throws ProdutoNaoExisteException {
+		Produto produto = buscaProduto(id);
+		repository.deleteProdutoById(id);
+
+    }
 }
