@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import com.winningwomen.supermercadoYara.model.Produto;
-import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -34,7 +31,7 @@ public class ProdutoController {
 
 	@GetMapping
 	public List<ProdutoResponse> listarTodosProdutos () {
-		return produtoService.listarTodos();
+		return produtoService.listarTodosOrdemAlfabetica();
 	}
 
 

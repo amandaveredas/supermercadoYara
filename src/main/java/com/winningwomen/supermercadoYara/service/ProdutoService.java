@@ -11,8 +11,7 @@ import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
 import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProdutoService {
@@ -45,8 +44,8 @@ public class ProdutoService {
 		repository.save(produto);
     }
 
-	public List<ProdutoResponse> listarTodos() {
-		List<Produto> produtos = repository.findAll();
+	public List<ProdutoResponse> listarTodosOrdemAlfabetica() {
+		List<Produto> produtos = repository.findAllByOrderByNomeAsc();
 		List<ProdutoResponse> listaProdutosResponse = new ArrayList<>();
 		for(Produto p: produtos){
 			ProdutoResponse produtoResponse = ProdutoResponse.builder()
