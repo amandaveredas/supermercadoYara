@@ -12,4 +12,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 
     boolean existsByNome(String nome);
     List<Produto> findAll();
+    List<Produto> findAllByOrderByNomeAsc();
 }
