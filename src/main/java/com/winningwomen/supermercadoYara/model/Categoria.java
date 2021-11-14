@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
+
 import lombok.*;
 
 @Entity
@@ -18,6 +20,10 @@ import lombok.*;
 @Setter
 public class Categoria {
 	
+	public Categoria(CategoriaRequest categoriaRequest) {
+		this.setNome(categoriaRequest.getNome());
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

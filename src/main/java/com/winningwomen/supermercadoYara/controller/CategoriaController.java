@@ -1,9 +1,11 @@
 package com.winningwomen.supermercadoYara.controller;
 
+import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesCategoriasException;
 import com.winningwomen.supermercadoYara.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.winningwomen.supermercadoYara.model.Categoria;
-import com.winningwomen.supermercadoYara.repository.CategoriaRepository;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -29,7 +32,12 @@ public class CategoriaController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarCategoria(@RequestBody @Valid Categoria categoria) throws AmbiguidadeDeNomesCategoriasException {
-		categoriaService.cadastrar(categoria);
+	public void cadastrarCategoria(@RequestBody @Valid CategoriaRequest categoriaRequest) throws AmbiguidadeDeNomesCategoriasException {
+		categoriaService.cadastrar(categoriaRequest);
+	}
+	
+	@GetMapping
+	public List<Categoria> listarTodasCategorias(){
+		return categoriaService.listarTodosOrdemAlfabetica();
 	}
 }

@@ -1,7 +1,7 @@
 package com.winningwomen.supermercadoYara.dto.request;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 import javax.validation.constraints.PastOrPresent;
 
