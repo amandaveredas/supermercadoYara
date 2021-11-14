@@ -97,10 +97,10 @@ public class ProdutoService {
 		return produto;
 	}
 
-	@Transactional
+
 	public void excluir(Long id) throws ProdutoNaoExisteException {
 		Produto produto = buscaProduto(id);
-		repository.deleteProdutoById(id);
+		repository.deleteById(id);
 
     }
 }
