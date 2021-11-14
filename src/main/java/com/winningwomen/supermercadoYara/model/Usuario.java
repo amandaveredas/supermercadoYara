@@ -8,9 +8,11 @@ import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 
 import jdk.jfr.Timestamp;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name="usuario")
 public class Usuario {
 	

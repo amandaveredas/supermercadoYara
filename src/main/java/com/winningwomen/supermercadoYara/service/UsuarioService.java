@@ -1,5 +1,7 @@
 package com.winningwomen.supermercadoYara.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +26,9 @@ public class UsuarioService {
 		Usuario usuario = new Usuario(usuarioRequest, funcao);
 		Usuario usuarioCompleto = this.usuarioRepository.save(usuario);
 		return new UsuarioResponse(usuarioCompleto);
+	}
+	
+	public List<Usuario> listarTodosOrdemAlfabetica(){
+		return usuarioRepository.findAllByOrderByNomeAsc();
 	}
 }
