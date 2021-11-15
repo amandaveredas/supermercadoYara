@@ -9,12 +9,14 @@ import javax.validation.constraints.NotNull;
 
 import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="funcao")
 public class Funcao {
 	
@@ -23,7 +25,7 @@ public class Funcao {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
 	private String nome;

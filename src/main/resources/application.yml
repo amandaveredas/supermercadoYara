@@ -1,0 +1,17 @@
+cloud:
+  aws:
+    credentials:
+      access-key:$AWSACCESSKEY
+      secret-key:$AWSSECRETKEY
+    region:
+      static: sa-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: vilayaraimagens
+
+
+server:
+  port: 9090
