@@ -1,5 +1,6 @@
 package com.winningwomen.supermercadoYara.dto.request;
 
+import com.winningwomen.supermercadoYara.model.Funcao;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -21,4 +22,9 @@ public class UsuarioRequest {
     private String senha;
     private LocalDate data_criacao;
     private Long id;
+    private Long funcao;
+
+    public Long getIdFuncao() {
+        return funcao;
+    }
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
+
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +14,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name="usuario")
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,5 +45,15 @@ public class Usuario {
 
 	@JoinColumn(name = "funcao_id")
 	private Funcao funcao;
+
+	public Usuario(UsuarioRequest usuarioRequest, Funcao funcao) {
+		this.setUser_name(usuarioRequest.getUser_name());
+		this.setNome(usuarioRequest.getNome());
+		this.setSobrenome(usuarioRequest.getSobrenome());
+		this.setEmail(usuarioRequest.getEmail());
+		this.setSenha(usuarioRequest.getSenha());
+		this.setData_criacao(usuarioRequest.getData_criacao());
+		this.setFuncao(funcao);
+	}
 
 }

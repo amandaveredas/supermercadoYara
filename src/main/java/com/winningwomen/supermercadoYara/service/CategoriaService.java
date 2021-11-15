@@ -1,10 +1,13 @@
 package com.winningwomen.supermercadoYara.service;
 
+import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesCategoriasException;
-import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
 import com.winningwomen.supermercadoYara.model.Categoria;
 import com.winningwomen.supermercadoYara.repository.CategoriaRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +27,16 @@ public class CategoriaService {
         return repository.findById(idCategoria).get();
     }
 
-    public void cadastrar(Categoria categoria) throws AmbiguidadeDeNomesCategoriasException {
-        if(repository.existsByNome(categoria.getNome()))
-            throw new AmbiguidadeDeNomesCategoriasException(categoria.getNome());
+    public void cadastrar(CategoriaRequest categoriaRequest) throws AmbiguidadeDeNomesCategoriasException {
+        if(repository.existsByNome(categoriaRequest.getNome()))
+            throw new AmbiguidadeDeNomesCategoriasException(categoriaRequest.getNome());
 
+        Categoria categoria = new Categoria(categoriaRequest);
+        		
         repository.save(categoria);
+    }
+    
+    public List<Categoria> listarTodosOrdemAlfabetica(){
+    	return this.repository.findAllByOrderByNomeAsc();
     }
 }

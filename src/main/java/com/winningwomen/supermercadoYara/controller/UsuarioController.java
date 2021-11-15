@@ -1,19 +1,17 @@
 package com.winningwomen.supermercadoYara.controller;
 
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
-import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesUsuariosException;
 import com.winningwomen.supermercadoYara.service.UsuarioService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.winningwomen.supermercadoYara.model.Usuario;
-import com.winningwomen.supermercadoYara.repository.UsuarioRepository;
 
-import javax.persistence.Id;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(value="/usuario")
@@ -27,13 +25,13 @@ public class UsuarioController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void cadastrarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException{
-		usuarioService.cadastrar(usuarioRequest);
+		usuarioService.cadastrarUsuario(usuarioRequest);
 	}
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<UsuarioResponse> listarTodosUsuarios(){
-		return usuarioService.listarTodos();
+	public List<Usuario> listarTodosUsuarios() {
+		return usuarioService.listarTodosOrdemAlfabetica();
 	}
 
 	@PutMapping
@@ -42,11 +40,11 @@ public class UsuarioController {
 		usuarioService.atualizar(usuarioRequest);
 	}
 
-	@DeleteMapping
+	/*@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(){
 		UsuarioRequest usuarioRequest = new UsuarioRequest();
 		usuarioService.deletar(usuarioRequest);
-	}
+	}*/
 
 }

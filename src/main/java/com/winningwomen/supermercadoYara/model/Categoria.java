@@ -7,19 +7,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
 
-@Data
+import lombok.*;
+
 @Entity
 @Table(name="categoria")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Categoria {
 	
+	public Categoria(CategoriaRequest categoriaRequest) {
+		this.setNome(categoriaRequest.getNome());
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
