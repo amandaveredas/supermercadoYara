@@ -1,37 +1,30 @@
 package com.winningwomen.supermercadoYara.dto.response;
 
-import java.time.LocalDate;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.winningwomen.supermercadoYara.model.Funcao;
 import com.winningwomen.supermercadoYara.model.Usuario;
-
+import jdk.jfr.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UsuarioResponse {
-	
-	
-	public UsuarioResponse(Usuario usuario) {
-		this.setNome(usuario.getNome());
-		this.setSobrenome(usuario.getSobrenome());
-		this.setEmail(usuario.getEmail());
-		this.setSenha(usuario.getSenha());
-		this.setData_criacao(usuario.getData_criacao());
-		Funcao funcao = new Funcao();
-		this.setFuncao(funcao);
-	}
-	
-	private String nome;
-	private String sobrenome;
-	private String email;
-	private String senha;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDate data_criacao;
+
+    private String user_name;
+    private String nome;
+    private String sobrenome;
+    private String email;
+    private String senha;
+	@Timestamp
+    private LocalDate data_criacao;
 	private Funcao funcao;
 
-
-
+    public UsuarioResponse(Usuario usuarioCompleto) {
+    }
 }

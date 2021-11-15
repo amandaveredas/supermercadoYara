@@ -9,7 +9,8 @@ import com.winningwomen.supermercadoYara.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-	
+
+    boolean existsByNome(String user_name);
 	List<Usuario> findAllByOrderByNomeAsc();
 
 }
