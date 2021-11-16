@@ -5,7 +5,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class AmbiguidadeDeNomesProdutosException extends Exception   {
-    public AmbiguidadeDeNomesProdutosException(String nome) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AmbiguidadeDeNomesProdutosException(String nome) {
         super("Já existe um produto cadastrado com o nome '"+nome+"'.");
 }
 }

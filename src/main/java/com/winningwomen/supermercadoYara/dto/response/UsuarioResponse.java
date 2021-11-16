@@ -1,6 +1,5 @@
 package com.winningwomen.supermercadoYara.dto.response;
 
-import com.winningwomen.supermercadoYara.model.Funcao;
 import com.winningwomen.supermercadoYara.model.Usuario;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
@@ -23,8 +22,8 @@ public class UsuarioResponse {
     private String senha;
 	@Timestamp
     private LocalDate data_criacao;
-	private Funcao funcao;
-
+	private String nomeFuncao;
+	
     public UsuarioResponse(Usuario usuarioCompleto) {
     }
 }

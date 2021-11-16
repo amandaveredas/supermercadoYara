@@ -3,8 +3,6 @@ package com.winningwomen.supermercadoYara.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 
@@ -21,10 +19,18 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false, length = 15)
 	private String nome;
+	
+	@Column(nullable = false)
 	private Integer quantidade;
+	
+	@Column(nullable = false)
 	private BigDecimal precoUnitario;
+	
+	@Column(nullable = false, length = 15)
 	private String descricao;
+	
 	private String imagem;
 	
 	@ManyToOne

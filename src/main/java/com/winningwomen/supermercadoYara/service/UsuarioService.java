@@ -3,9 +3,10 @@ package com.winningwomen.supermercadoYara.service;
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesUsuariosException;
+import com.winningwomen.supermercadoYara.exception.FuncaoNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoExisteException;
 import com.winningwomen.supermercadoYara.model.Funcao;
 import com.winningwomen.supermercadoYara.model.Usuario;
-import com.winningwomen.supermercadoYara.repository.FuncaoRepository;
 import com.winningwomen.supermercadoYara.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +18,25 @@ import java.util.List;
 public class UsuarioService {
 
     private UsuarioRepository repository;
-
+    private FuncaoService funcaoService;
+    
     @Autowired
-    public UsuarioService(UsuarioRepository repository){
+    public UsuarioService(UsuarioRepository repository, FuncaoService funcaoService){
         this.repository = repository;
+        this.funcaoService = funcaoService;
     }
+    
+    
+    public void cadastrarUsuario(UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException{
 
-    public void cadastrarUsuario(UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException{
-
-        if(repository.existsByNome(usuarioRequest.getUser_name())) throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getUser_name());
-
+        if(repository.existsByNome(usuarioRequest.getUser_name())) 
+        	throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getNome());
+        
+        Funcao funcao = funcaoService.buscarPeloId(usuarioRequest.getIdFuncao());
+        
         Usuario usuario = Usuario.builder()
                 .user_name(usuarioRequest.getUser_name())
+                .funcao(funcao)
                 .nome(usuarioRequest.getNome())
                 .sobrenome(usuarioRequest.getSobrenome())
                 .email(usuarioRequest.getEmail())
@@ -39,7 +47,7 @@ public class UsuarioService {
         repository.save(usuario);
     }
 
-    public List<UsuarioResponse> listarTodos(){
+    public List<UsuarioResponse> listarTodosOrdemAlfabetica(){
         List<Usuario> usuarios = repository.findAll();
         List<UsuarioResponse> listaUsuariosResponse = new ArrayList<>();
         for (Usuario u: usuarios){
@@ -50,6 +58,7 @@ public class UsuarioService {
                     .email(u.getEmail())
                     .senha(u.getSenha())
                     .data_criacao(u.getData_criacao())
+                    .nomeFuncao(u.getFuncao().getNome())
                     .build();
             listaUsuariosResponse.add(usuarioResponse);
         }
@@ -57,41 +66,44 @@ public class UsuarioService {
         return listaUsuariosResponse;
     }
 
-    public void atualizar(UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException{
-
-        if(repository.existsByNome(usuarioRequest.getUser_name())) throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getUser_name());
-
-        Usuario usuario = Usuario.builder()
-                .user_name(usuarioRequest.getUser_name())
-                .nome(usuarioRequest.getNome())
-                .sobrenome(usuarioRequest.getSobrenome())
-                .email(usuarioRequest.getEmail())
-                .senha(usuarioRequest.getSenha())
-                .data_criacao(usuarioRequest.getData_criacao())
-                .build();
-
-        repository.save(usuario);
+    public UsuarioResponse atualizar(Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException{
+    	Usuario usuario = buscaUsuario(id);
+    	Funcao funcao = funcaoService.buscarPeloId(usuarioRequest.getIdFuncao());
+    	
+    	usuario.setNome(usuarioRequest.getNome());
+    	usuario.setFuncao(funcao);
+    	usuario.setEmail(usuarioRequest.getEmail());
+    	usuario.setSobrenome(usuarioRequest.getSobrenome());
+    	usuario.setSenha(usuarioRequest.getSenha());
+    	usuario.setData_criacao(usuarioRequest.getData_criacao());
+    	usuario.setUser_name(usuarioRequest.getUser_name());
+    	
+    	repository.save(usuario);
+    	
+    	UsuarioResponse usuarioResponse = UsuarioResponse.builder()
+    			.nome(usuario.getNome())
+    			.nomeFuncao(funcao.getNome())
+    			.email(usuario.getEmail())
+    			.sobrenome(usuario.getSobrenome())
+    			.senha(usuario.getSenha())
+    			.data_criacao(usuario.getData_criacao())
+    			.user_name(usuario.getUser_name())
+    			.build();
+    	
+    	return usuarioResponse;    	
     }
 
-    /*public void deletar(UsuarioRequest usuarioRequest){
-        if (repository.existsById(usuarioRequest.getId())) {
-            Usuario usuario = new Usuario();
-            repository.delete(usuario);
-        }*/
-
-    @Autowired
-    UsuarioRepository user_repository;
-    FuncaoRepository funcaoRepository;
-    public UsuarioResponse cadastrar(UsuarioRequest usuarioRequest) {
-        Funcao funcao = this.funcaoRepository.findById(usuarioRequest.getIdFuncao()).orElseThrow(RuntimeException::new);
-        Usuario usuario = new Usuario(usuarioRequest, funcao);
-        Usuario usuarioCompleto = this.user_repository.save(usuario);
-        return new UsuarioResponse(usuarioCompleto);
+    private Usuario buscaUsuario(Long id) throws UsuarioNaoExisteException {
+    	if(!repository.existsById(id)) throw new UsuarioNaoExisteException(id);
+    	Usuario usuario = repository.findById(id).get();
+    	return usuario;
+    }
+    
+    public void excluir(Long id) throws UsuarioNaoExisteException {
+         repository.deleteById(id);
     }
 
-    public List<Usuario> listarTodosOrdemAlfabetica(){
-        return user_repository.findAllByOrderByNomeAsc();
-    }
+    
     }
 
 
