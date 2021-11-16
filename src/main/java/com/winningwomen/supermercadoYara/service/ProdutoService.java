@@ -4,12 +4,15 @@ import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
 import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoExcetion;
 import com.winningwomen.supermercadoYara.model.Categoria;
+import com.winningwomen.supermercadoYara.model.Login;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
@@ -29,12 +32,14 @@ public class ProdutoService {
 	private ProdutoRepository repository;
 	private CategoriaService categoriaService;
 	private ImagemService imagemService;
+	private LoginService loginService;
 
 	@Autowired
-	public ProdutoService(ProdutoRepository repository, CategoriaService categoriaService, ImagemService imagemService) {
+	public ProdutoService(ProdutoRepository repository, CategoriaService categoriaService, ImagemService imagemService, LoginService loginService) {
 		this.repository = repository;
 		this.categoriaService = categoriaService;
 		this.imagemService = imagemService;
+		this.loginService = loginService;
 	}
 
 	public void cadastrar(ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
@@ -109,7 +114,13 @@ public class ProdutoService {
 	}
 
 
-	public void excluir(Long id) throws ProdutoNaoExisteException {
+	public void excluir(HttpHeaders headers, Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoExcetion {
+
+		Long token = Long.parseLong(headers.get("token").get(0));
+		boolean tokenValido = loginService.tokenValido(token);
+		if(!tokenValido) throw new UsuarioNaoLogadoExcetion();
+
+
 		Produto produto = buscaProduto(id);
 		repository.deleteById(id);
 		imagemService.excluir(produto.getImagem());

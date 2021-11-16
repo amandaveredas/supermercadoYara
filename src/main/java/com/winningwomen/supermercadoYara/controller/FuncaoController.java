@@ -22,7 +22,7 @@ public class FuncaoController {
 	@Autowired
 	FuncaoService funcaoService; 
 	
-	@PostMapping(consumes = "application/json", produces = "application/json")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void post(@RequestBody FuncaoRequest funcaoRequest) {
 		funcaoService.cadastrar(funcaoRequest);

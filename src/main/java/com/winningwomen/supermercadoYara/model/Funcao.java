@@ -9,15 +9,15 @@ import javax.validation.constraints.NotNull;
 
 import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="funcao")
+@Getter
+@Setter
 public class Funcao {
 	
 	public Funcao(FuncaoRequest funcaoRequest) {
