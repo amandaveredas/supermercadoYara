@@ -54,6 +54,5 @@ public class Usuario {
     
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "funcao_id")
-	@ManyToOne
 	private Funcao funcao;
 }
