@@ -9,12 +9,14 @@ import javax.validation.constraints.NotNull;
 
 import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="funcao")
 public class Funcao {
 	

@@ -7,10 +7,7 @@ import javax.persistence.*;
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 
 import jdk.jfr.Timestamp;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
@@ -18,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Table(name="usuario")
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Usuario {
 	
 	public Usuario(UsuarioRequest usuarioRequest, Funcao funcao) {
@@ -55,5 +54,6 @@ public class Usuario {
     
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "funcao_id")
+	@ManyToOne
 	private Funcao funcao;
 }
