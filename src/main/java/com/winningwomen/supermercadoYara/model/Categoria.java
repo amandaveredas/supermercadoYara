@@ -25,7 +25,7 @@ public class Categoria {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull(message = "Campo nome não pode ser nulo.")

@@ -17,9 +17,7 @@ import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
@@ -47,7 +45,7 @@ public class ProdutoService {
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
 		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
 
-				Produto produto = Produto.builder()
+		Produto produto = Produto.builder()
 				.nome(produtoRequest.getNome())
 				.categoria(categoria)
 				.descricao(produtoRequest.getDescricao())
