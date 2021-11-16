@@ -5,7 +5,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class AmbiguidadeDeNomesUsuariosException extends Exception {
-    public AmbiguidadeDeNomesUsuariosException(String user_name){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AmbiguidadeDeNomesUsuariosException(String user_name){
         super("Já existe um usuario cadastrado com o nome '"+user_name+"'.");
     }
 }

@@ -1,7 +1,10 @@
 package com.winningwomen.supermercadoYara.controller;
 
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
+import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesUsuariosException;
+import com.winningwomen.supermercadoYara.exception.FuncaoNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoExisteException;
 import com.winningwomen.supermercadoYara.service.UsuarioService;
 import java.util.List;
 
@@ -24,27 +27,23 @@ public class UsuarioController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException{
+	public void cadastrarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException{
 		usuarioService.cadastrarUsuario(usuarioRequest);
 	}
 
 	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
-	public List<Usuario> listarTodosUsuarios() {
+	public List<UsuarioResponse> listarTodosUsuarios(){
 		return usuarioService.listarTodosOrdemAlfabetica();
 	}
 
-	@PutMapping
-	@ResponseStatus(HttpStatus.OK)
-	public void atualizarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest)throws AmbiguidadeDeNomesUsuariosException{
-		usuarioService.atualizar(usuarioRequest);
+	@PutMapping("/{id}")
+	public UsuarioResponse alterarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException{
+		return usuarioService.atualizar(id, usuarioRequest);
 	}
 
-	/*@DeleteMapping
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deletar(){
-		UsuarioRequest usuarioRequest = new UsuarioRequest();
-		usuarioService.deletar(usuarioRequest);
-	}*/
+	@DeleteMapping("/{id}")
+	public void excluirUsuario(@PathVariable Long id) throws UsuarioNaoExisteException{
+		usuarioService.excluir(id);
+	}
 
 }

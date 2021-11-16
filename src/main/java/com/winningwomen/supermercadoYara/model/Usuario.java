@@ -18,6 +18,16 @@ import lombok.*;
 @Getter
 @Setter
 public class Usuario {
+	
+	public Usuario(UsuarioRequest usuarioRequest, Funcao funcao) {
+		this.setUser_name(usuarioRequest.getUser_name());
+		this.setNome(usuarioRequest.getNome());
+		this.setSobrenome(usuarioRequest.getSobrenome());
+		this.setEmail(usuarioRequest.getEmail());
+		this.setSenha(usuarioRequest.getSenha());
+		this.setData_criacao(usuarioRequest.getData_criacao());
+		this.setFuncao(funcao);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,19 +51,9 @@ public class Usuario {
     @Column(name = "data_criacao", updatable = false)
     @Timestamp
 	private LocalDate data_criacao;
-
+    
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "funcao_id")
 	@ManyToOne
 	private Funcao funcao;
-
-	public Usuario(UsuarioRequest usuarioRequest, Funcao funcao) {
-		this.setUser_name(usuarioRequest.getUser_name());
-		this.setNome(usuarioRequest.getNome());
-		this.setSobrenome(usuarioRequest.getSobrenome());
-		this.setEmail(usuarioRequest.getEmail());
-		this.setSenha(usuarioRequest.getSenha());
-		this.setData_criacao(usuarioRequest.getData_criacao());
-		this.setFuncao(funcao);
-	}
-
 }
