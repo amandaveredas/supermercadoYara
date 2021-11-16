@@ -5,9 +5,11 @@ import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
 import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoExcetion;
 import com.winningwomen.supermercadoYara.service.ImagemService;
 import com.winningwomen.supermercadoYara.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,8 +47,8 @@ public class ProdutoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void excluirProduto(@PathVariable Long id) throws ProdutoNaoExisteException {
-		produtoService.excluir(id);
+	public void excluirProduto(@RequestHeader HttpHeaders headers, @PathVariable Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoExcetion {
+		produtoService.excluir(headers, id);
 	}
 
 	@PostMapping("/exportar")

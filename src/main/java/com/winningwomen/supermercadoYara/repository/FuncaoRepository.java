@@ -9,7 +9,7 @@ import com.winningwomen.supermercadoYara.model.Funcao;
 
 @Repository
 public interface FuncaoRepository extends JpaRepository<Funcao, Long> {
-	
+	Funcao save(Funcao funcao);
 	List<Funcao> findAllByOrderByNomeAsc();
 	
 }

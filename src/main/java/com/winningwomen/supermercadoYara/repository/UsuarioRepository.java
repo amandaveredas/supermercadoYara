@@ -12,5 +12,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     boolean existsByNome(String user_name);
 	List<Usuario> findAllByOrderByNomeAsc();
-
+    Usuario findByEmailEqualsAndSenhaEquals(String email, String senha);
 }
