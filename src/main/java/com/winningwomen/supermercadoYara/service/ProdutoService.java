@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
 import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -29,11 +30,13 @@ public class ProdutoService {
 	
 	private ProdutoRepository repository;
 	private CategoriaService categoriaService;
+	private ImagemService imagemService;
 
 	@Autowired
-	public ProdutoService(ProdutoRepository repository, CategoriaService categoriaService) {
+	public ProdutoService(ProdutoRepository repository, CategoriaService categoriaService, ImagemService imagemService) {
 		this.repository = repository;
 		this.categoriaService = categoriaService;
+		this.imagemService = imagemService;
 	}
 
 	public void cadastrar(ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
@@ -42,6 +45,7 @@ public class ProdutoService {
 			throw new AmbiguidadeDeNomesProdutosException(produtoRequest.getNome());
 
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
+		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
 
 				Produto produto = Produto.builder()
 				.nome(produtoRequest.getNome())
@@ -49,7 +53,7 @@ public class ProdutoService {
 				.descricao(produtoRequest.getDescricao())
 				.quantidade(produtoRequest.getQuantidade())
 				.precoUnitario(produtoRequest.getPrecoUnitario())
-				.imagem(produtoRequest.getImagem())
+				.imagem(urlImagem)
 				.build();
 
 		repository.save(produto);
@@ -76,13 +80,14 @@ public class ProdutoService {
 	public ProdutoResponse alterar(Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException {
 		Produto produto = buscaProduto(id);
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
+		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
 
 		produto.setNome(produtoRequest.getNome());
 		produto.setCategoria(categoria);
 		produto.setDescricao(produtoRequest.getDescricao());
 		produto.setQuantidade(produtoRequest.getQuantidade());
 		produto.setPrecoUnitario(produtoRequest.getPrecoUnitario());
-		produto.setImagem(produtoRequest.getImagem());
+		produto.setImagem(urlImagem);
 
 		repository.save(produto);
 
@@ -109,7 +114,7 @@ public class ProdutoService {
 	public void excluir(Long id) throws ProdutoNaoExisteException {
 		Produto produto = buscaProduto(id);
 		repository.deleteById(id);
-
+		imagemService.excluir(produto.getImagem());
     }
 
 	public void exportar() {

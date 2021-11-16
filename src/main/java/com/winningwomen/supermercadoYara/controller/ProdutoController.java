@@ -5,10 +5,12 @@ import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
 import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
 import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
 import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
+import com.winningwomen.supermercadoYara.service.ImagemService;
 import com.winningwomen.supermercadoYara.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,15 +20,17 @@ import java.util.List;
 public class ProdutoController {
 	
 	private ProdutoService produtoService;
+	private ImagemService imagemService;
 
 	@Autowired
-	public ProdutoController(ProdutoService produtoService) {
+	public ProdutoController(ProdutoService produtoService, ImagemService imagemService) {
 		this.produtoService = produtoService;
+		this.imagemService = imagemService;
 	}
 
-	@PostMapping
+	@PostMapping(consumes = {"multipart/form-data"})
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarProduto(@RequestBody @Valid ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
+	public void cadastrarProduto(@ModelAttribute @Valid ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
 		produtoService.cadastrar(produtoRequest);
 	}
 
@@ -35,8 +39,8 @@ public class ProdutoController {
 		return produtoService.listarTodosOrdemAlfabetica();
 	}
 
-	@PutMapping("/{id}")
-	public ProdutoResponse alterarProduto(@PathVariable Long id, @RequestBody @Valid ProdutoRequest produtoRequest) throws CategoriaNaoExisteException, ProdutoNaoExisteException {
+	@PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
+	public ProdutoResponse alterarProduto(@PathVariable Long id, @ModelAttribute @Valid ProdutoRequest produtoRequest) throws CategoriaNaoExisteException, ProdutoNaoExisteException {
 		return produtoService.alterar(id, produtoRequest);
 	}
 
@@ -49,4 +53,9 @@ public class ProdutoController {
 	public void exportarExcel(){
 		produtoService.exportar();
 	}
+
+//	@PostMapping("/imagem/upload")
+//	public String salvarImagem(@RequestParam(value = "arquivo")MultipartFile arquivo){
+//		return imagemService.salvarImagem(arquivo);
+//	}
 }

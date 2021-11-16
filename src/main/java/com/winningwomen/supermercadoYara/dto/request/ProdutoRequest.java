@@ -1,9 +1,11 @@
 package com.winningwomen.supermercadoYara.dto.request;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.math.BigDecimal;
 
 @Data
@@ -18,6 +20,6 @@ public class ProdutoRequest {
 	@NotNull(message = "Campo idCategoria não pode ser nulo.")
 	private Long idCategoria;
 	private String descricao;
-	private String imagem;
+	private MultipartFile imagem;
 
 }
