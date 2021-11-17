@@ -24,8 +24,6 @@ public class UsuarioRequest {
     @NotEmpty(message = "Campo senha não pode ser nulo ou vazio.")
     private String senha;
     
-    private LocalDate data_criacao;
-    
     private Long funcao;
 
     public Long getIdFuncao() {
