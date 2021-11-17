@@ -1,5 +1,6 @@
 package com.winningwomen.supermercadoYara.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.winningwomen.supermercadoYara.model.Usuario;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +22,8 @@ public class UsuarioResponse {
     private String sobrenome;
     private String email;
     private String senha;
-	@Timestamp
-    private LocalDate data_criacao;
+    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+    private LocalDateTime data_criacao;
 	private String nomeFuncao;
 	
     public UsuarioResponse(Usuario usuarioCompleto) {

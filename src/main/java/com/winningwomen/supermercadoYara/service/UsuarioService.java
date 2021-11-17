@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class UsuarioService {
                 .sobrenome(usuarioRequest.getSobrenome())
                 .email(usuarioRequest.getEmail())
                 .senha(usuarioRequest.getSenha())
-                .data_criacao(usuarioRequest.getData_criacao())
+                .data_criacao(LocalDateTime.now())
                 .build();
 
         repository.save(usuario);
@@ -54,6 +55,7 @@ public class UsuarioService {
         loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         List<Usuario> usuarios = repository.findAll();
         List<UsuarioResponse> listaUsuariosResponse = new ArrayList<>();
+
         for (Usuario u: usuarios){
             UsuarioResponse usuarioResponse = UsuarioResponse.builder()
                     .user_name(u.getUser_name())
@@ -80,7 +82,6 @@ public class UsuarioService {
     	usuario.setEmail(usuarioRequest.getEmail());
     	usuario.setSobrenome(usuarioRequest.getSobrenome());
     	usuario.setSenha(usuarioRequest.getSenha());
-    	usuario.setData_criacao(usuarioRequest.getData_criacao());
     	usuario.setUser_name(usuarioRequest.getUser_name());
     	
     	repository.save(usuario);

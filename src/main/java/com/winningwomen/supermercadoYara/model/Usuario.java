@@ -1,13 +1,16 @@
 package com.winningwomen.supermercadoYara.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 
 import jdk.jfr.Timestamp;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Entity
@@ -25,7 +28,7 @@ public class Usuario {
 		this.setSobrenome(usuarioRequest.getSobrenome());
 		this.setEmail(usuarioRequest.getEmail());
 		this.setSenha(usuarioRequest.getSenha());
-		this.setData_criacao(usuarioRequest.getData_criacao());
+		this.setData_criacao(LocalDateTime.now());
 		this.setFuncao(funcao);
 	}
 
@@ -49,8 +52,8 @@ public class Usuario {
 	private String senha;
 
     @Column(name = "data_criacao", updatable = false)
-    @Timestamp
-	private LocalDate data_criacao;
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+	private LocalDateTime data_criacao;
     
 	@ManyToOne
 	@JoinColumn(name = "funcao_id")
