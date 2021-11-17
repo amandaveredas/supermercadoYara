@@ -2,14 +2,12 @@ package com.winningwomen.supermercadoYara.controller;
 
 import java.util.List;
 
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoEAdministradorException;
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
 import com.winningwomen.supermercadoYara.model.Funcao;
@@ -24,12 +22,12 @@ public class FuncaoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void post(@RequestBody FuncaoRequest funcaoRequest) {
-		funcaoService.cadastrar(funcaoRequest);
+	public void post(@RequestHeader HttpHeaders headers, @RequestBody FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		funcaoService.cadastrar(headers, funcaoRequest);
 	}
 
 	@GetMapping
-	public List<Funcao> listarTodasFuncoes(){
-		return funcaoService.listarTodosOrdemAlfabetica();
+	public List<Funcao> listarTodasFuncoes(@RequestHeader HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		return funcaoService.listarTodosOrdemAlfabetica(headers);
 	}
 }

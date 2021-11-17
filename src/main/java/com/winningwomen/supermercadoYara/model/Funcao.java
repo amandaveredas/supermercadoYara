@@ -11,24 +11,27 @@ import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
 
 import lombok.*;
 
-@Data
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="funcao")
 @Getter
 @Setter
+@Builder
 public class Funcao {
 	
 	public Funcao(FuncaoRequest funcaoRequest) {
 		this.setNome(funcaoRequest.getNome());
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+
+	@NotNull(message = "Campo nome não pode ser nulo.")
 	private String nome;
+
 	
 
 }
