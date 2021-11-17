@@ -1,12 +1,8 @@
 package com.winningwomen.supermercadoYara.service;
 
 import com.winningwomen.supermercadoYara.dto.response.ProdutoResponse;
-import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesProdutosException;
-import com.winningwomen.supermercadoYara.exception.CategoriaNaoExisteException;
-import com.winningwomen.supermercadoYara.exception.ProdutoNaoExisteException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoExcetion;
+import com.winningwomen.supermercadoYara.exception.*;
 import com.winningwomen.supermercadoYara.model.Categoria;
-import com.winningwomen.supermercadoYara.model.Login;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.winningwomen.supermercadoYara.dto.request.ProdutoRequest;
 import com.winningwomen.supermercadoYara.model.Produto;
 import com.winningwomen.supermercadoYara.repository.ProdutoRepository;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,7 +37,8 @@ public class ProdutoService {
 		this.loginService = loginService;
 	}
 
-	public void cadastrar(ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException {
+	public void cadastrar(HttpHeaders headers, ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		if(repository.existsByNome(produtoRequest.getNome()))
 			throw new AmbiguidadeDeNomesProdutosException(produtoRequest.getNome());
@@ -62,7 +58,10 @@ public class ProdutoService {
 		repository.save(produto);
     }
 
-	public List<ProdutoResponse> listarTodosOrdemAlfabetica() {
+	public List<ProdutoResponse> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoLogadoException {
+		if(!loginService.verificaSeTokenValido(headers))
+			throw new UsuarioNaoLogadoException();
+
 		List<Produto> produtos = repository.findAllByOrderByNomeAsc();
 		List<ProdutoResponse> listaProdutosResponse = new ArrayList<>();
 		for(Produto p: produtos){
@@ -80,7 +79,9 @@ public class ProdutoService {
 		return listaProdutosResponse;
 	}
 
-	public ProdutoResponse alterar(Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException {
+	public ProdutoResponse alterar(HttpHeaders headers, Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+
 		Produto produto = buscaProduto(id);
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
 		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
@@ -106,33 +107,24 @@ public class ProdutoService {
 		return  produtoResponse;
 	}
 
-	private Produto buscaProduto(Long id) throws ProdutoNaoExisteException {
-		if(!repository.existsById(id))
-			throw new ProdutoNaoExisteException(id);
-		Produto produto = repository.findById(id).get();
-		return produto;
-	}
-
-
-	public void excluir(HttpHeaders headers, Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoExcetion {
-
-		Long token = Long.parseLong(headers.get("token").get(0));
-		boolean tokenValido = loginService.tokenValido(token);
-		if(!tokenValido) throw new UsuarioNaoLogadoExcetion();
-
+	public void excluir(HttpHeaders headers, Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoException, UsuarioNaoEAdministradorException {
+		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		Produto produto = buscaProduto(id);
 		repository.deleteById(id);
 		imagemService.excluir(produto.getImagem());
     }
 
-	public void exportar() {
+	public void exportar(HttpHeaders headers) throws UsuarioNaoLogadoException {
+		if(!loginService.verificaSeTokenValido(headers))
+			throw new UsuarioNaoLogadoException();
+
 		String caminhoDiretorio = criaCaminhoDiretorio();
 		String caminhoArquivo = criaCaminhoArquivo("produtos.xls",caminhoDiretorio);
 		criaDiretorioSeNaoExistir(caminhoDiretorio);
 
 
-		List<ProdutoResponse> produtos = listarTodosOrdemAlfabetica();
+		List<ProdutoResponse> produtos = listarTodosOrdemAlfabetica(headers);
 		List<String> cabecalhos = Arrays.asList("Nome", "Categoria", "Descrição","Quantidade", "Preço", "Imagem");
 		HSSFWorkbook workbook = criaPlanilha(produtos, cabecalhos);
 
@@ -200,5 +192,12 @@ public class ProdutoService {
 				+ separador +"vilayara"
 				+ separador +"exports";
 		return diretorio;
+	}
+
+	private Produto buscaProduto(Long id) throws ProdutoNaoExisteException {
+		if(!repository.existsById(id))
+			throw new ProdutoNaoExisteException(id);
+		Produto produto = repository.findById(id).get();
+		return produto;
 	}
 }

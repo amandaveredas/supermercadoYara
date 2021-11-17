@@ -2,9 +2,7 @@ package com.winningwomen.supermercadoYara.controller;
 
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
-import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesUsuariosException;
-import com.winningwomen.supermercadoYara.exception.FuncaoNaoExisteException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.*;
 import com.winningwomen.supermercadoYara.service.UsuarioService;
 import java.util.List;
 
@@ -28,23 +26,23 @@ public class UsuarioController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException{
-		usuarioService.cadastrarUsuario(usuarioRequest);
+	public void cadastrarUsuario(@RequestHeader HttpHeaders headers, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		usuarioService.cadastrarUsuario(headers,usuarioRequest);
 	}
 
 	@GetMapping
-	public List<UsuarioResponse> listarTodosUsuarios(){
-		return usuarioService.listarTodosOrdemAlfabetica();
+	public List<UsuarioResponse> listarTodosUsuarios(@RequestHeader HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		return usuarioService.listarTodosOrdemAlfabetica(headers);
 	}
 
 	@PutMapping("/{id}")
-	public UsuarioResponse alterarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException{
-		return usuarioService.atualizar(id, usuarioRequest);
+	public UsuarioResponse alterarUsuario(@RequestHeader HttpHeaders headers, @PathVariable Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		return usuarioService.atualizar(headers, id, usuarioRequest);
 	}
 
 	@DeleteMapping("/{id}")
-	public void excluirUsuario(@PathVariable Long id) throws UsuarioNaoExisteException{
-		usuarioService.excluir(id);
+	public void excluirUsuario(@RequestHeader HttpHeaders headers, @PathVariable Long id) throws UsuarioNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		usuarioService.excluir(headers,id);
 	}
 
 }

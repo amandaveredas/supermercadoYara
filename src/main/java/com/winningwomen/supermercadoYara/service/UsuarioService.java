@@ -2,11 +2,9 @@ package com.winningwomen.supermercadoYara.service;
 
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
-import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesUsuariosException;
-import com.winningwomen.supermercadoYara.exception.FuncaoNaoExisteException;
-import com.winningwomen.supermercadoYara.exception.LoginNegadoException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoExisteException;
+import com.winningwomen.supermercadoYara.exception.*;
 import com.winningwomen.supermercadoYara.model.Funcao;
+import com.winningwomen.supermercadoYara.model.Login;
 import com.winningwomen.supermercadoYara.model.Usuario;
 import com.winningwomen.supermercadoYara.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +19,19 @@ public class UsuarioService {
 
     private UsuarioRepository repository;
     private FuncaoService funcaoService;
-
+    private LoginService loginService;
     
     @Autowired
-    public UsuarioService(UsuarioRepository repository, FuncaoService funcaoService){
+    public UsuarioService(UsuarioRepository repository, FuncaoService funcaoService, LoginService loginService){
         this.repository = repository;
         this.funcaoService = funcaoService;
+        this.loginService = loginService;
 
     }
     
     
-    public void cadastrarUsuario(UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException {
+    public void cadastrarUsuario(HttpHeaders headers,UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(repository.existsByNome(usuarioRequest.getUser_name()))
         	throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getNome());
         
@@ -50,7 +50,8 @@ public class UsuarioService {
         repository.save(usuario);
     }
 
-    public List<UsuarioResponse> listarTodosOrdemAlfabetica(){
+    public List<UsuarioResponse> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         List<Usuario> usuarios = repository.findAll();
         List<UsuarioResponse> listaUsuariosResponse = new ArrayList<>();
         for (Usuario u: usuarios){
@@ -69,8 +70,9 @@ public class UsuarioService {
         return listaUsuariosResponse;
     }
 
-    public UsuarioResponse atualizar(Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException{
-    	Usuario usuario = buscaUsuario(id);
+    public UsuarioResponse atualizar(HttpHeaders headers, Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+    	loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        Usuario usuario = buscaUsuario(id);
     	Funcao funcao = funcaoService.buscarPeloId(usuarioRequest.getIdFuncao());
     	
     	usuario.setNome(usuarioRequest.getNome());
@@ -102,7 +104,8 @@ public class UsuarioService {
     	return usuario;
     }
     
-    public void excluir(Long id) throws UsuarioNaoExisteException {
+    public void excluir(HttpHeaders headers,Long id) throws UsuarioNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
          repository.deleteById(id);
     }
 

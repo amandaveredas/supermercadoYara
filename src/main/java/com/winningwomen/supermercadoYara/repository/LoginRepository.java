@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface LoginRepository extends JpaRepository<Login, Long> {
     Login save(Login login);
     Optional<Login> findById(Long login);
+
 }

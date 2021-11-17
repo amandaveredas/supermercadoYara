@@ -52,7 +52,7 @@ public class Usuario {
     @Timestamp
 	private LocalDate data_criacao;
     
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "funcao_id")
 	private Funcao funcao;
 }
