@@ -31,7 +31,7 @@ public class FuncaoService {
 	}
 	
 	public void cadastrar(HttpHeaders headers, FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 		Funcao funcao = new Funcao(funcaoRequest);
 		funcaoRepository.save(funcao);
 	}

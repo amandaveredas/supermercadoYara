@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UsuarioService {
@@ -30,15 +31,19 @@ public class UsuarioService {
     }
     
     
-    public void cadastrarUsuario(HttpHeaders headers,UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-        //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
-        if(repository.existsByNome(usuarioRequest.getUser_name()))
-        	throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getNome());
+    public void cadastrarUsuario(HttpHeaders headers,UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
+        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        if(repository.existsByUserName(usuarioRequest.getUserName()))
+        	throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getUserName());
+
+        if(repository.existsByEmail(usuarioRequest.getEmail()))
+            throw new AmbiguidadeDeEmailsException(usuarioRequest.getEmail());
+
         
         Funcao funcao = funcaoService.buscarPeloNome(usuarioRequest.nomeFuncao());
         
         Usuario usuario = Usuario.builder()
-                .user_name(usuarioRequest.getUser_name())
+                .userName(usuarioRequest.getUserName())
                 .funcao(funcao)
                 .nome(usuarioRequest.getNome())
                 .sobrenome(usuarioRequest.getSobrenome())
@@ -57,12 +62,12 @@ public class UsuarioService {
 
         for (Usuario u: usuarios){
             UsuarioResponse usuarioResponse = UsuarioResponse.builder()
-                    .user_name(u.getUser_name())
+                    .userName(u.getUserName())
                     .nome(u.getNome())
                     .sobrenome(u.getSobrenome())
                     .email(u.getEmail())
                     .senha(u.getSenha())
-                    .data_criacao(u.getData_criacao())
+                    .dataCriacao(u.getData_criacao())
                     .nomeFuncao(u.getFuncao().getNome())
                     .build();
             listaUsuariosResponse.add(usuarioResponse);
@@ -71,17 +76,27 @@ public class UsuarioService {
         return listaUsuariosResponse;
     }
 
-    public UsuarioResponse atualizar(HttpHeaders headers, Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+    public UsuarioResponse atualizar(HttpHeaders headers, Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
     	loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         Usuario usuario = buscaUsuario(id);
     	Funcao funcao = funcaoService.buscarPeloNome(usuarioRequest.nomeFuncao());
+
+        if(repository.existsByUserName(usuarioRequest.getUserName())){
+            if(!Objects.equals(repository.findByUserName(usuarioRequest.getUserName()).getId(), id))
+                throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getUserName());
+        }
+
+        if(repository.existsByEmail(usuarioRequest.getEmail())){
+            if(!Objects.equals(repository.findByEmailEquals(usuarioRequest.getEmail()).getId(), id))
+                throw new AmbiguidadeDeEmailsException(usuarioRequest.getEmail());
+        }
     	
     	usuario.setNome(usuarioRequest.getNome());
     	usuario.setFuncao(funcao);
     	usuario.setEmail(usuarioRequest.getEmail());
     	usuario.setSobrenome(usuarioRequest.getSobrenome());
     	usuario.setSenha(usuarioRequest.getSenha());
-    	usuario.setUser_name(usuarioRequest.getUser_name());
+    	usuario.setUserName(usuarioRequest.getUserName());
     	
     	repository.save(usuario);
     	
@@ -91,8 +106,8 @@ public class UsuarioService {
     			.email(usuario.getEmail())
     			.sobrenome(usuario.getSobrenome())
     			.senha(usuario.getSenha())
-    			.data_criacao(usuario.getData_criacao())
-    			.user_name(usuario.getUser_name())
+    			.dataCriacao(usuario.getData_criacao())
+    			.userName(usuario.getUserName())
     			.build();
     	
     	return usuarioResponse;    	

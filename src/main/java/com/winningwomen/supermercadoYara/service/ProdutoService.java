@@ -79,12 +79,17 @@ public class ProdutoService {
 		return listaProdutosResponse;
 	}
 
-	public ProdutoResponse alterar(HttpHeaders headers, Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+	public ProdutoResponse alterar(HttpHeaders headers, Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeNomesProdutosException {
 		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		Produto produto = buscaProduto(id);
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
 		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
+
+		if(repository.existsByNome(produtoRequest.getNome())){
+			if(!Objects.equals(repository.findByNomeIgnoringCase(produtoRequest.getNome()).getId(), id))
+				throw new AmbiguidadeDeNomesProdutosException(produtoRequest.getNome());
+		}
 
 		produto.setNome(produtoRequest.getNome());
 		produto.setCategoria(categoria);

@@ -10,7 +10,7 @@ public class AmbiguidadeDeNomesUsuariosException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public AmbiguidadeDeNomesUsuariosException(String user_name){
-        super("Já existe um usuario cadastrado com o nome '"+user_name+"'.");
+	public AmbiguidadeDeNomesUsuariosException(String userName){
+        super("Já existe um usuario cadastrado com o username '"+userName+"'.");
     }
 }

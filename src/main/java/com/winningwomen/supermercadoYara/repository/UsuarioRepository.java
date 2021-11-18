@@ -10,7 +10,10 @@ import com.winningwomen.supermercadoYara.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    boolean existsByNome(String user_name);
+    boolean existsByUserName(String user_name);
 	List<Usuario> findAllByOrderByNomeAsc();
     Usuario findByEmailEqualsAndSenhaEquals(String email, String senha);
+    Usuario findByUserName(String userName);
+    boolean existsByEmail(String email);
+    Usuario findByEmailEquals(String email);
 }

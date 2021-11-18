@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @Builder
 public class UsuarioResponse {
 
-    private String user_name;
+    private String userName;
     private String nome;
     private String sobrenome;
     private String email;
     private String senha;
     @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
-    private LocalDateTime data_criacao;
+    private LocalDateTime dataCriacao;
 	private String nomeFuncao;
 	
     public UsuarioResponse(Usuario usuarioCompleto) {

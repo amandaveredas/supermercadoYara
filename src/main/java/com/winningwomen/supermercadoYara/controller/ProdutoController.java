@@ -38,7 +38,7 @@ public class ProdutoController {
 	}
 
 	@PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
-	public ProdutoResponse alterarProduto(@RequestHeader HttpHeaders headers,@PathVariable Long id, @ModelAttribute @Valid ProdutoRequest produtoRequest) throws CategoriaNaoExisteException, ProdutoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+	public ProdutoResponse alterarProduto(@RequestHeader HttpHeaders headers,@PathVariable Long id, @ModelAttribute @Valid ProdutoRequest produtoRequest) throws CategoriaNaoExisteException, ProdutoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeNomesProdutosException {
 		return produtoService.alterar(headers, id, produtoRequest);
 	}
 

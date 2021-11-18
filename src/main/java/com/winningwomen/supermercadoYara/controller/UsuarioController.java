@@ -26,7 +26,7 @@ public class UsuarioController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarUsuario(@RequestHeader HttpHeaders headers, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+	public void cadastrarUsuario(@RequestHeader HttpHeaders headers, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
 		usuarioService.cadastrarUsuario(headers,usuarioRequest);
 	}
 
@@ -36,7 +36,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/{id}")
-	public UsuarioResponse alterarUsuario(@RequestHeader HttpHeaders headers, @PathVariable Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+	public UsuarioResponse alterarUsuario(@RequestHeader HttpHeaders headers, @PathVariable Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
 		return usuarioService.atualizar(headers, id, usuarioRequest);
 	}
 
