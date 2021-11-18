@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Usuario {
 	
 	public Usuario(UsuarioRequest usuarioRequest, Funcao funcao) {
-		this.setUser_name(usuarioRequest.getUser_name());
+		this.setUserName(usuarioRequest.getUserName());
 		this.setNome(usuarioRequest.getNome());
 		this.setSobrenome(usuarioRequest.getSobrenome());
 		this.setEmail(usuarioRequest.getEmail());
@@ -36,7 +36,7 @@ public class Usuario {
 	@NotNull(message = "Campo username não pode ser nulo.")
 	@NotEmpty(message = "Campo username não pode ser vazio.")
     @Column(nullable = false, length = 15)
-    private String user_name;
+    private String userName;
 
     @Column(nullable = false, length = 50)
 	@NotNull(message = "Campo nome não pode ser nulo.")

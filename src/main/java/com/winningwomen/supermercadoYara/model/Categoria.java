@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
 
 import lombok.*;
@@ -27,6 +28,7 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
 
 	@NotNull(message = "Campo username não pode ser nulo.")

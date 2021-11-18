@@ -16,4 +16,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
     List<Produto> findAllByOrderByNomeAsc();
     Optional<Produto> findById(Long id);
     void deleteById(Long id);
+    Produto findByNomeIgnoringCase(String nome);
 }

@@ -11,7 +11,7 @@ public class UsuarioRequest {
 
     @NotNull(message = "Campo username não pode ser nulo.")
     @NotEmpty(message = "Campo username não pode ser vazio.")
-    private String user_name;
+    private String userName;
     @NotNull(message = "Campo nome não pode ser nulo.")
     @NotEmpty(message = "Campo nome não pode ser vazio.")
     private String nome;
