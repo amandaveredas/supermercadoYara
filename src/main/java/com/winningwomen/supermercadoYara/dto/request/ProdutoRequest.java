@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 @Data
 public class ProdutoRequest {
 
-	@NotEmpty(message = "Campo nome não pode ser nulo ou vazio.")
+	@NotEmpty(message = "Campo nome não pode ser vazio.")
+	@NotNull(message = "Campo nome não pode ser nulo.")
 	private String nome;
 	@NotNull(message = "Campo quantidade não pode ser nulo.")
 	private Integer quantidade;

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
@@ -36,18 +38,25 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message = "Campo username não pode ser nulo.")
+	@NotEmpty(message = "Campo username não pode ser vazio.")
     @Column(nullable = false, length = 15)
     private String user_name;
 
     @Column(nullable = false, length = 50)
+	@NotNull(message = "Campo nome não pode ser nulo.")
+	@NotEmpty(message = "Campo nome não pode ser vazio.")
 	private String nome;
-
+	@NotNull(message = "Campo sobrenome não pode ser nulo.")
+	@NotEmpty(message = "Campo sobrenome não pode ser vazio.")
     @Column(nullable = false, length = 50)
 	private String sobrenome;
-
+	@NotNull(message = "Campo email não pode ser nulo.")
+	@NotEmpty(message = "Campo email não pode ser vazio.")
     @Column(nullable = false, length = 150)
 	private String email;
-
+	@NotNull(message = "Campo senha não pode ser nulo.")
+	@NotEmpty(message = "Campo senha não pode ser vazio.")
     @Column(nullable = false)
 	private String senha;
 
@@ -57,5 +66,6 @@ public class Usuario {
     
 	@ManyToOne
 	@JoinColumn(name = "funcao_id")
+	@NotNull(message = "Campo função não pode ser nulo.")
 	private Funcao funcao;
 }

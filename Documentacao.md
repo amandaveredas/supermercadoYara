@@ -3,18 +3,7 @@ ___
 ## Backend
 ___
 
-### Estrutura das classes de domínio
-
-* Produtos
-	- id
-	- nome
-	- Categoria categoria
-	- descricao
-	- quantidade
-	- precoUnitario
-	- imagem
-	
-___
+__
 ### Funcionalidades
 
 1. Produtos
@@ -22,7 +11,7 @@ ___
 	1.1. Cadastro de produtos
 	 
 	 * Assinatura	 	
-	 	*  POST/produtos
+	 	*  POST(/produtos)
  
 	* Parâmetros de entrada
 	 	

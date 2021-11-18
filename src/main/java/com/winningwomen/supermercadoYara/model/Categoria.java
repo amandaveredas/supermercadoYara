@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
@@ -28,7 +29,8 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "Campo nome não pode ser nulo.")
+	@NotNull(message = "Campo username não pode ser nulo.")
+	@NotEmpty(message = "Campo user name não pode ser vazio.")
 	private String nome;
 
 }
