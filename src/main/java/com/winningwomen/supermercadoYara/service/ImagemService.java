@@ -26,6 +26,7 @@ public class ImagemService {
     private AmazonS3 s3Client;
 
     public String salvarImagem(MultipartFile arquivo){
+        if(arquivo == null || arquivo.isEmpty()) return null;
         File arquivoFinal = converteMultipartFileParaFile(arquivo);
         String nomeArquivo = System.currentTimeMillis()+"_"+arquivo.getOriginalFilename();
         s3Client.putObject(new PutObjectRequest(bucketName, nomeArquivo,arquivoFinal ));
