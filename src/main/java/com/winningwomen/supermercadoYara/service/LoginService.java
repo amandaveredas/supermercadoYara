@@ -70,6 +70,16 @@ public class LoginService {
     }
 
 
+    public void logout(HttpHeaders headers) throws UsuarioNaoLogadoException {
+        if(!verificaSeTokenValido(headers))
+            throw new UsuarioNaoLogadoException();
+
+        Long token = Long.parseLong(headers.get("token").get(0));
+        Login login = repository.findById(token).get();
+        login.setHoraLogout(LocalDateTime.now());
+
+        repository.save(login);
+    }
 }
 
 
