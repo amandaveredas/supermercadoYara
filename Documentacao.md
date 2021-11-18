@@ -8,7 +8,7 @@ ___
 1. Produtos
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para as operações de cadastro, alteração, e exclusão, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
+	* OBS2: Para as operações de cadastro, alteração, e exclusão, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 
 	1.1. Cadastro de produtos
@@ -18,7 +18,7 @@ ___
  
 	* Parâmetros de entrada
 	 	
-	 	* ProdutoRequest:	 		
+	 	* ProdutoRequest	 		
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -40,16 +40,14 @@ ___
 	 * Assinatura	 	
 	 	*  GET(/produtos)
  
-	* Parâmetros de entrada
+	* Sem parâmetros de entrada
 	 	
-	 	* Body: Vazio
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
 		* Body: List < ProdutoResponse >
 
-		* ProdutoResponse:	 		
-		
+	
 	* Comportamentos:
 		*  Caso nenhum produto seja localizado, retorna uma lista vazia. 
 		
@@ -61,7 +59,7 @@ ___
  
 	* Parâmetros de entrada
 	 	
-	 	* ProdutoRequest:	 		
+	 	* ProdutoRequest	
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -81,7 +79,7 @@ ___
 	* Assinatura	 	
 	 	*  DELETE(/produtos/{id})
  
-	* Parâmetros de entrada
+	* Sem parâmetros de entrada
 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
@@ -97,7 +95,7 @@ ___
 	* Assinatura	 	
 	 	*  POST(/produtos/exportar)
  
-	* Parâmetros de entrada
+	* Sem parâmetros de entrada
 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
@@ -108,7 +106,7 @@ _____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para operações de cadastro, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
+	* OBS2: Para operações de cadastro, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	2.1. Cadastro de categorias
 	 
@@ -117,7 +115,7 @@ _____
  
 	* Parâmetros de entrada
 	 	
-	 	* CategoriaRequest:	 		
+	 	* CategoriaRequest	 		
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -126,7 +124,7 @@ _____
 			 
 	* Regras:
 		* Não deve ser possível cadastrar mais de uma categoria com o mesmo nome: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
-			* Mensagem: ```Já existe uma categoria cadastrada com o nome '{substituir-por-nome-informado}'.```
+			* Mensagem: ```"Já existe uma categoria cadastrada com o nome '{substituir-por-nome-informado}'".```
 
 
 	2.2. Listagem de categorias
@@ -134,9 +132,7 @@ _____
 	 * Assinatura	 	
 	 	*  GET(/produtos)
  
-	* Parâmetros de entrada
-	 	
-	 	* Body: Vazio
+	* Sem parâmetros de entrada
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
@@ -151,7 +147,7 @@ _____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
+	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	3.1. Cadastro de usuários
 	 
@@ -160,7 +156,7 @@ _____
  
 	* Parâmetros de entrada
 	 	
-	 	* UsuarioRequest:	 		
+	 	* UsuarioRequest	 		
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -170,12 +166,15 @@ _____
 
 	* Comportamentos:
 		* Caso nenhuma função seja localizada, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
-			* Mensagem: ```Nenhuma função com nome '{SUBSTITUIR-PELO-NOME}' foi encontrada.'.```
+			* Mensagem: ```"Nenhuma função com nome '{SUBSTITUIR-PELO-NOME}' foi encontrada.".```
 
 			 
 	* Regras:
 		* Não deve ser possível cadastrar mais de um usuário com o mesmo username: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
 			* Mensagem: ```"Já existe um usuario cadastrado com o username '{USERNAME-INFORMADO}}'.".```
+
+		* Não deve ser possível cadastrar mais de um usuário com o mesmo email: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
+			* Mensagem: ```"Já existe um usuario cadastrado com o email '{EMAIL-INFORMADO}}'.".```
 
 
 	3.2. Listagem de usuários
@@ -183,9 +182,7 @@ _____
 	 * Assinatura	 	
 	 	*  GET(/usuarios)
  
-	* Parâmetros de entrada
-	 	
-	 	* Body: Vazio
+	* Sem parâmetros de entrada
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
@@ -202,7 +199,7 @@ _____
  
 	* Parâmetros de entrada
 	 	
-	 	* UsuarioRequest:	 		
+	 	* UsuarioRequest	 		
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -217,16 +214,18 @@ _____
 			* Mensagem: ```"O usuário com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrado.".```	
 			 
 	* Regras:
-		* Não deve ser possível cadastrar mais de um usuário com o mesmo username: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
+		* Não deve ser possível atualizar o username para um que já exista: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
 			* Mensagem: ```"Já existe um usuario cadastrado com o username '{USERNAME-INFORMADO}}'.".```
+		* Não deve ser possível atualizar o email para um que já exista: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
+			* Mensagem: ```"Já existe um usuario cadastrado com o email '{EMAIL-INFORMADO}}'.".```
 		
 
-	1.4. Excluir usuário
+	3.4. Excluir usuário
 	
 	* Assinatura	 	
 	 	*  DELETE(/usuario/{id})
  
-	* Parâmetros de entrada
+	* Sem parâmetros de entrada
 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
@@ -242,7 +241,7 @@ ____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
+	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	4.1. Cadastro de funções
 	 
@@ -251,7 +250,7 @@ ____
  
 	* Parâmetros de entrada
 	 	
-	 	* FunçãoRequest:	 		
+	 	* FunçãoRequest 		
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -268,9 +267,7 @@ ____
 	 * Assinatura	 	
 	 	*  GET(/funcoes)
  
-	* Parâmetros de entrada
-	 	
-	 	* Body: Vazio
+	* Sem parâmetros de entrada
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
@@ -291,7 +288,7 @@ ___
  
 	* Parâmetros de entrada
 	 	
-	 	* LoginUsuarioRequest:	 		
+	 	* LoginUsuarioRequest	 		
 	 		
 	 		 
 	* Saída esperada em caso de sucesso:
@@ -308,9 +305,7 @@ ___
 	 * Assinatura	 	
 	 	*  GET(/login/logout)
  
-	* Parâmetros de entrada
-	 	
-	 	* Body: Vazio
+	* Sem parâmetros de entrada
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
