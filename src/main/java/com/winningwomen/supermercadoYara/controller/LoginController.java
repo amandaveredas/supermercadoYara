@@ -2,8 +2,10 @@ package com.winningwomen.supermercadoYara.controller;
 
 import com.winningwomen.supermercadoYara.dto.request.LoginUsuarioRequest;
 import com.winningwomen.supermercadoYara.exception.LoginNegadoException;
+import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
 import com.winningwomen.supermercadoYara.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,4 +25,11 @@ public class LoginController {
     public Long logarUsuario(@RequestBody @Valid LoginUsuarioRequest loginUsuarioRequest) throws LoginNegadoException {
         return loginService.gerarTokenLogin(loginUsuarioRequest);
     }
+
+    @GetMapping("/logout")
+    public void deslogarUsuario(@RequestHeader HttpHeaders headers) throws UsuarioNaoLogadoException {
+        loginService.logout(headers);
+    }
+
+
 }
