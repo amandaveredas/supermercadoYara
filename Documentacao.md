@@ -27,12 +27,12 @@ ___
 		
 	* Comportamentos:
 		* Caso nenhuma categoria seja localizada, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
-			* Mensagem: ```Nenhuma categoria com nome '{SUBSTITUIR-PELO-NOME}' foi encontrada.'.```
+			* Mensagem: ```"Nenhuma categoria com nome '{SUBSTITUIR-PELO-NOME}' foi encontrada.".```
 
 		 
 	* Regras:
 		* Não deve ser possível cadastrar mais de um produto com o mesmo nome: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
-			* Mensagem: ```Já existe um produto cadastrado com o nome '{substituir-por-nome-informado}'.```
+			* Mensagem: ```"Já existe um produto cadastrado com o nome '{substituir-por-nome-informado}'".```
 
 
 	1.2. Listagem de produtos
@@ -68,7 +68,7 @@ ___
 		
 	* Comportamentos:
 		* Caso nenhuma categoria seja localizada, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
-			* Mensagem: ```Nenhuma categoria com nome '{SUBSTITUIR-PELO-NOME-INFORMADO}' foi encontrada..```
+			* Mensagem: ```"Nenhuma categoria com nome '{SUBSTITUIR-PELO-NOME-INFORMADO}' foi encontrada."```
 
 		* Caso o produto não seja localizado, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
 			* Mensagem: ```"O produto com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrado.".```
@@ -147,7 +147,7 @@ _____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
+	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	3.1. Cadastro de usuários
 	 
@@ -208,7 +208,7 @@ _____
 		
 	* Comportamentos:
 		* Caso nenhuma função seja localizada, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
-			* Mensagem: ```Nenhuma função com nome '{SUBSTITUIR-PELO-NOME}' foi encontrada.'.```
+			* Mensagem: ```"Nenhuma função com nome '{SUBSTITUIR-PELO-NOME}' foi encontrada.".```
 
 		* Caso o usuário não seja localizado, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
 			* Mensagem: ```"O usuário com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrado.".```	
@@ -241,7 +241,7 @@ ____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
+	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	4.1. Cadastro de funções
 	 
@@ -259,7 +259,7 @@ ____
 			 
 	* Regras:
 		* Não deve ser possível cadastrar mais de uma função com o mesmo nome: deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
-			* Mensagem: ```Já existe uma função cadastrada com o nome '{substituir-por-nome-informado}'.```
+			* Mensagem: ```"Já existe uma função cadastrada com o nome '{substituir-por-nome-informado}'."```
 
 
 	4.2. Listagem de funções
@@ -297,7 +297,7 @@ ___
 			 
 	* Comportamento:
 		* Caso o email ou a senha informados não sejam corretas:deve lançar uma exceção que retorne o status 400 e uma mensagem informando o problema.
-			* Mensagem: ```Acesso Negado! E-mail ou senha incorretos.```
+			* Mensagem: ```"Acesso Negado! E-mail ou senha incorretos."```
 
 
 	5.2. Logout
@@ -314,4 +314,4 @@ ___
 		
 	* Comportamentos:
 		*  Caso o usuário não esteja logado, uma exceção 401 (UNAUTHORIZED) será lançada com uma mensagem informando o problema.
-			* Mensagem: ``` Acesso negado. Usuário precisa logar no sistema.```
+			* Mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
