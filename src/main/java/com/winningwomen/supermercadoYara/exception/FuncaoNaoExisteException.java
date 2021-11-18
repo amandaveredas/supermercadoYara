@@ -10,8 +10,8 @@ public class FuncaoNaoExisteException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public FuncaoNaoExisteException(Long id) {
-		super("Nenhuma categoria com id '"+id+"' foi encontrada.");
+	public FuncaoNaoExisteException(String nome) {
+		super("Nenhuma função com nome '"+nome+"' foi encontrada.");
 	}
 
 }
