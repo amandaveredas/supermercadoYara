@@ -1,18 +1,13 @@
 package com.winningwomen.supermercadoYara.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
-
-import jdk.jfr.Timestamp;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
 
 @Data
 @Entity

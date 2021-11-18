@@ -16,7 +16,7 @@ import com.winningwomen.supermercadoYara.model.Usuario;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value="/usuario")
+@RequestMapping(value="/usuarios")
 public class UsuarioController {
 
 	private UsuarioService usuarioService;

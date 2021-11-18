@@ -16,7 +16,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="funcao")
+@Table(name="funcoes")
 @Getter
 @Setter
 @Builder

@@ -25,13 +25,13 @@ public class FuncaoService {
 		this.loginService = loginService;
 	}
 	
-	public Funcao buscarPeloId(long idFuncao) throws FuncaoNaoExisteException{
-		if(!funcaoRepository.existsById(idFuncao)) throw new FuncaoNaoExisteException(idFuncao);
-		return funcaoRepository.findById(idFuncao).get();
+	public Funcao buscarPeloNome(String nomeFuncao) throws FuncaoNaoExisteException{
+		if(!funcaoRepository.existsByNomeIgnoringCase(nomeFuncao)) throw new FuncaoNaoExisteException(nomeFuncao);
+		return funcaoRepository.findByNomeIgnoringCase(nomeFuncao);
 	}
 	
 	public void cadastrar(HttpHeaders headers, FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 		Funcao funcao = new Funcao(funcaoRequest);
 		funcaoRepository.save(funcao);
 	}

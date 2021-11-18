@@ -4,7 +4,6 @@ import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
 import com.winningwomen.supermercadoYara.exception.*;
 import com.winningwomen.supermercadoYara.model.Funcao;
-import com.winningwomen.supermercadoYara.model.Login;
 import com.winningwomen.supermercadoYara.model.Usuario;
 import com.winningwomen.supermercadoYara.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,11 @@ public class UsuarioService {
     
     
     public void cadastrarUsuario(HttpHeaders headers,UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(repository.existsByNome(usuarioRequest.getUser_name()))
         	throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getNome());
         
-        Funcao funcao = funcaoService.buscarPeloId(usuarioRequest.getIdFuncao());
+        Funcao funcao = funcaoService.buscarPeloNome(usuarioRequest.nomeFuncao());
         
         Usuario usuario = Usuario.builder()
                 .user_name(usuarioRequest.getUser_name())
@@ -75,7 +74,7 @@ public class UsuarioService {
     public UsuarioResponse atualizar(HttpHeaders headers, Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
     	loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         Usuario usuario = buscaUsuario(id);
-    	Funcao funcao = funcaoService.buscarPeloId(usuarioRequest.getIdFuncao());
+    	Funcao funcao = funcaoService.buscarPeloNome(usuarioRequest.nomeFuncao());
     	
     	usuario.setNome(usuarioRequest.getNome());
     	usuario.setFuncao(funcao);

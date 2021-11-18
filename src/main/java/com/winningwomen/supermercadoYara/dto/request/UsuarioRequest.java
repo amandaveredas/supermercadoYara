@@ -25,9 +25,9 @@ public class UsuarioRequest {
     @NotEmpty(message = "Campo senha não pode ser vazio.")
     private String senha;
     @NotNull(message = "Campo funcao não pode ser nulo.")
-    private Long funcao;
+    private String funcao;
 
-    public Long getIdFuncao() {
+    public String nomeFuncao() {
         return funcao;
     }
 }

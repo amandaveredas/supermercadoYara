@@ -11,5 +11,7 @@ import com.winningwomen.supermercadoYara.model.Funcao;
 public interface FuncaoRepository extends JpaRepository<Funcao, Long> {
 	Funcao save(Funcao funcao);
 	List<Funcao> findAllByOrderByNomeAsc();
+	boolean existsByNomeIgnoringCase(String nome);
+	Funcao findByNomeIgnoringCase(String nome);
 	
 }
