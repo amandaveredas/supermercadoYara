@@ -2,6 +2,7 @@ package com.winningwomen.supermercadoYara.controller;
 
 import java.util.List;
 
+import com.winningwomen.supermercadoYara.exception.FuncaoJaExisteException;
 import com.winningwomen.supermercadoYara.exception.UsuarioNaoEAdministradorException;
 import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class FuncaoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void post(@RequestHeader HttpHeaders headers, @RequestBody FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+	public void post(@RequestHeader HttpHeaders headers, @RequestBody FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, FuncaoJaExisteException {
 		funcaoService.cadastrar(headers, funcaoRequest);
 	}
 

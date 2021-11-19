@@ -2,6 +2,7 @@ package com.winningwomen.supermercadoYara.service;
 
 import java.util.List;
 
+import com.winningwomen.supermercadoYara.exception.FuncaoJaExisteException;
 import com.winningwomen.supermercadoYara.exception.UsuarioNaoEAdministradorException;
 import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,14 @@ public class FuncaoService {
 		return funcaoRepository.findByNomeIgnoringCase(nomeFuncao);
 	}
 	
-	public void cadastrar(HttpHeaders headers, FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+	public void cadastrar(HttpHeaders headers, FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, FuncaoJaExisteException {
 		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		if(funcaoRepository.existsByNomeIgnoringCase(funcaoRequest.getNome()))
+			throw new FuncaoJaExisteException(funcaoRequest.getNome());
 		Funcao funcao = new Funcao(funcaoRequest);
 		funcaoRepository.save(funcao);
+
+
 	}
 	
 	public List<Funcao> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
