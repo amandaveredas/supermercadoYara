@@ -32,7 +32,7 @@ public class UsuarioService {
     
     
     public void cadastrarUsuario(HttpHeaders headers,UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
-        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(repository.existsByUserName(usuarioRequest.getUserName()))
         	throw new AmbiguidadeDeNomesUsuariosException(usuarioRequest.getUserName());
 
