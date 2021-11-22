@@ -15,6 +15,7 @@ import com.winningwomen.supermercadoYara.model.Usuario;
 
 import javax.validation.Valid;
 
+@CrossOrigin("*") 
 @RestController
 @RequestMapping(value="/usuarios")
 public class UsuarioController {
