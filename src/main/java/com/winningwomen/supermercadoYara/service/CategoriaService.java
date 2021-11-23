@@ -32,7 +32,7 @@ public class CategoriaService {
     }
 
     public void cadastrar(HttpHeaders headers, CategoriaRequest categoriaRequest) throws AmbiguidadeDeNomesCategoriasException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+       // loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(repository.existsByNome(categoriaRequest.getNome()))
             throw new AmbiguidadeDeNomesCategoriasException(categoriaRequest.getNome());
 
@@ -42,8 +42,8 @@ public class CategoriaService {
     }
     
     public List<Categoria> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoLogadoException {
-        if(!loginService.verificaSeTokenValido(headers))
-            throw new UsuarioNaoLogadoException();
+        //if(!loginService.verificaSeTokenValido(headers))
+        //    throw new UsuarioNaoLogadoException();
 
     	return this.repository.findAllByOrderByNomeAsc();
     }

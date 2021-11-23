@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -28,11 +29,9 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnore
 	private Long id;
 
-	@NotNull(message = "Campo username não pode ser nulo.")
-	@NotEmpty(message = "Campo user name não pode ser vazio.")
+	@NotBlank(message = "Campo user name não pode ser vazio.")
 	private String nome;
 
 }

@@ -56,12 +56,13 @@ public class UsuarioService {
     }
 
     public List<UsuarioResponse> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         List<Usuario> usuarios = repository.findAll();
         List<UsuarioResponse> listaUsuariosResponse = new ArrayList<>();
 
         for (Usuario u: usuarios){
             UsuarioResponse usuarioResponse = UsuarioResponse.builder()
+                    .id(u.getId())
                     .userName(u.getUserName())
                     .nome(u.getNome())
                     .sobrenome(u.getSobrenome())
@@ -77,7 +78,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponse atualizar(HttpHeaders headers, Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
-    	loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+    	//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         Usuario usuario = buscaUsuario(id);
     	Funcao funcao = funcaoService.buscarPeloNome(usuarioRequest.nomeFuncao());
 
@@ -101,6 +102,7 @@ public class UsuarioService {
     	repository.save(usuario);
     	
     	UsuarioResponse usuarioResponse = UsuarioResponse.builder()
+                .id(usuario.getId())
     			.nome(usuario.getNome())
     			.nomeFuncao(funcao.getNome())
     			.email(usuario.getEmail())
@@ -113,17 +115,19 @@ public class UsuarioService {
     	return usuarioResponse;    	
     }
 
-    private Usuario buscaUsuario(Long id) throws UsuarioNaoExisteException {
-    	if(!repository.existsById(id)) throw new UsuarioNaoExisteException(id);
-    	Usuario usuario = repository.findById(id).get();
-    	return usuario;
-    }
+
     
     public void excluir(HttpHeaders headers,Long id) throws UsuarioNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
         loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(!repository.existsById(id))
             throw new UsuarioNaoExisteException(id);
          repository.deleteById(id);
+    }
+
+    private Usuario buscaUsuario(Long id) throws UsuarioNaoExisteException {
+        if(!repository.existsById(id)) throw new UsuarioNaoExisteException(id);
+        Usuario usuario = repository.findById(id).get();
+        return usuario;
     }
 
 
