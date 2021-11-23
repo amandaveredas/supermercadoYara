@@ -8,7 +8,7 @@ ___
 1. Produtos
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para as operações de cadastro, alteração, e exclusão, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
+	* Para as operações de cadastro, alteração, e exclusão, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 
 	1.1. Cadastro de produtos
@@ -106,7 +106,7 @@ _____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para operações de cadastro, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
+	* Para operações de cadastro, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	2.1. Cadastro de categorias
 	 
@@ -147,7 +147,7 @@ _____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
+	* Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	3.1. Cadastro de usuários
 	 
@@ -241,7 +241,7 @@ ____
 
 	* Para todas as operações dessa seção, o usuário deve estar logado, caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
 	
-	* OBS2: Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
+	* Para todas as operações dessa seção, o usuário precisa ser um ADMINISTRADOR. Caso 	contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: ``` "Acesso Negado! Usuário não possui acesso a essa funcionalidade."```
 
 	4.1. Cadastro de funções
 	 
@@ -315,3 +315,47 @@ ___
 	* Comportamentos:
 		*  Caso o usuário não esteja logado, uma exceção 401 (UNAUTHORIZED) será lançada com uma mensagem informando o problema.
 			* Mensagem: ``` "Acesso negado. Usuário precisa logar no sistema."```
+			
+6. Redefinição de senha
+
+	* Para a operações Gerar Token, o usuário precisa ser um ADMINISTRADOR. Caso contrário uma exceção 401 (UNAUTHORIZED) será lançada com a seguinte mensagem: "Acesso Negado! Usuário não possui acesso a essa funcionalidade."
+	
+	6.1. Gerar Token
+	 
+	 * Assinatura	 	
+	 	*  POST(/redefinicao/token)
+ 
+	* Parâmetros de entrada
+	 	
+	 	* GeraTokenRedefineRequest	 		
+	 		
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: Long tokenSenha
+			 
+	* Comportamento:
+		* Caso o email não exista:deve lançar uma exceção que retorne o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```""O usuário com email '{SUBSTITUIR-POR-EMAIL-INFORMADO}' não foi encontrado."```
+
+
+	6.2. Redefinir Senha
+	 
+	 * Assinatura	 	
+	 	*  GET(/login/logout)
+ 
+	* Parâmetros de entrada
+	 	
+	 	* RedefineSenhaRequest	 		
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: Vazio
+	 		
+		
+	* Comportamento:
+		* Caso o email não exista:deve lançar uma exceção que retorne o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```""O usuário com email '{SUBSTITUIR-POR-EMAIL-INFORMADO}' não foi encontrado."```
+			
+		* Caso o token ou email não estejam corretos:deve lançar uma exceção que retorne o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```"Não foi possível criar nova senha!"```

@@ -22,4 +22,7 @@ public class VerificarEmailESenhaService {
             throw new LoginNegadoException();
         return usuario;
     }
+
+
+
 }
