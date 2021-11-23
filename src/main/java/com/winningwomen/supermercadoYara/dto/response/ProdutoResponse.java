@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Builder
 public class ProdutoResponse {
 
+	private Long id;
 	private String nome;
 	private int quantidade;
 	private BigDecimal precoUnitario;

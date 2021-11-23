@@ -38,7 +38,7 @@ public class ProdutoService {
 	}
 
 	public void cadastrar(HttpHeaders headers, ProdutoRequest produtoRequest) throws AmbiguidadeDeNomesProdutosException, CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		if(repository.existsByNome(produtoRequest.getNome()))
 			throw new AmbiguidadeDeNomesProdutosException(produtoRequest.getNome());
@@ -59,13 +59,14 @@ public class ProdutoService {
     }
 
 	public List<ProdutoResponse> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoLogadoException {
-		if(!loginService.verificaSeTokenValido(headers))
-			throw new UsuarioNaoLogadoException();
+		//if(!loginService.verificaSeTokenValido(headers))
+			//throw new UsuarioNaoLogadoException();
 
 		List<Produto> produtos = repository.findAllByOrderByNomeAsc();
 		List<ProdutoResponse> listaProdutosResponse = new ArrayList<>();
 		for(Produto p: produtos){
 			ProdutoResponse produtoResponse = ProdutoResponse.builder()
+					.id(p.getId())
 					.nome(p.getNome())
 					.descricao(p.getDescricao())
 					.nomeCategoria(p.getCategoria().getNome())
@@ -80,7 +81,7 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponse alterar(HttpHeaders headers, Long id, ProdutoRequest produtoRequest) throws ProdutoNaoExisteException, CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeNomesProdutosException {
-		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		Produto produto = buscaProduto(id);
 		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
@@ -101,6 +102,7 @@ public class ProdutoService {
 		repository.save(produto);
 
 		ProdutoResponse produtoResponse = ProdutoResponse.builder()
+				.id(produto.getId())
 				.nome(produto.getNome())
 				.nomeCategoria(categoria.getNome())
 				.descricao(produto.getDescricao())
@@ -113,7 +115,7 @@ public class ProdutoService {
 	}
 
 	public void excluir(HttpHeaders headers, Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoException, UsuarioNaoEAdministradorException {
-		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		Produto produto = buscaProduto(id);
 		repository.deleteById(id);
@@ -121,8 +123,8 @@ public class ProdutoService {
     }
 
 	public void exportar(HttpHeaders headers) throws UsuarioNaoLogadoException {
-		if(!loginService.verificaSeTokenValido(headers))
-			throw new UsuarioNaoLogadoException();
+		//if(!loginService.verificaSeTokenValido(headers))
+			//throw new UsuarioNaoLogadoException();
 
 		String caminhoDiretorio = criaCaminhoDiretorio();
 		String caminhoArquivo = criaCaminhoArquivo("produtos.xls",caminhoDiretorio);

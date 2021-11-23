@@ -42,7 +42,7 @@ public class FuncaoService {
 	}
 	
 	public List<Funcao> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-		loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		return funcaoRepository.findAllByOrderByNomeAsc();
 	}
