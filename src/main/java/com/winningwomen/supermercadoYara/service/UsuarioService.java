@@ -1,5 +1,6 @@
 package com.winningwomen.supermercadoYara.service;
 
+import com.winningwomen.supermercadoYara.dto.request.RedefineSenhaRequest;
 import com.winningwomen.supermercadoYara.dto.request.UsuarioRequest;
 import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
 import com.winningwomen.supermercadoYara.exception.*;
@@ -124,10 +125,27 @@ public class UsuarioService {
          repository.deleteById(id);
     }
 
+    public Usuario buscaUsuarioPeloEmail(String email) throws UsuarioNaoExisteComEmailException {
+        if(!repository.existsByEmail(email))
+            throw new UsuarioNaoExisteComEmailException(email);
+
+            return repository.findByEmailEquals(email);
+
+
+    }
+
     private Usuario buscaUsuario(Long id) throws UsuarioNaoExisteException {
         if(!repository.existsById(id)) throw new UsuarioNaoExisteException(id);
         Usuario usuario = repository.findById(id).get();
         return usuario;
+    }
+
+    public void atualizarSenha(Long id, RedefineSenhaRequest redefineSenhaRequest) throws UsuarioNaoExisteException {
+        Usuario usuario = buscaUsuario(id);
+        usuario.setSenha(redefineSenhaRequest.getNovaSenha());
+
+        repository.save(usuario);
+
     }
 
 

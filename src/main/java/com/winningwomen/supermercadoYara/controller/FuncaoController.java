@@ -14,6 +14,8 @@ import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
 import com.winningwomen.supermercadoYara.model.Funcao;
 import com.winningwomen.supermercadoYara.service.FuncaoService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value="/funcao")
 public class FuncaoController {
@@ -23,7 +25,7 @@ public class FuncaoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void post(@RequestHeader HttpHeaders headers, @RequestBody FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, FuncaoJaExisteException {
+	public void post(@RequestHeader HttpHeaders headers, @RequestBody @Valid FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, FuncaoJaExisteException {
 		funcaoService.cadastrar(headers, funcaoRequest);
 	}
 
