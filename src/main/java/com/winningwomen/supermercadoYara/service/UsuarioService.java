@@ -116,7 +116,7 @@ public class UsuarioService {
 
     
     public void excluir(HttpHeaders headers,Long id) throws UsuarioNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
-        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(!repository.existsById(id))
             throw new UsuarioNaoExisteException(id);
          repository.deleteById(id);
