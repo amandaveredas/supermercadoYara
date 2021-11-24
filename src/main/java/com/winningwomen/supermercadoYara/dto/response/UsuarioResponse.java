@@ -19,7 +19,6 @@ public class UsuarioResponse {
     private String nome;
     private String sobrenome;
     private String email;
-    private String senha;
     @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime dataCriacao;
 	private String nomeFuncao;

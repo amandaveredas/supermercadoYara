@@ -43,7 +43,7 @@ public class ProdutoService {
 		if(repository.existsByNome(produtoRequest.getNome()))
 			throw new AmbiguidadeDeNomesProdutosException(produtoRequest.getNome());
 
-		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
+		Categoria categoria = categoriaService.buscarPeloId(headers,produtoRequest.getIdCategoria());
 		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
 
 		Produto produto = Produto.builder()
@@ -84,7 +84,7 @@ public class ProdutoService {
 		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
 		Produto produto = buscaProduto(id);
-		Categoria categoria = categoriaService.buscarPeloId(produtoRequest.getIdCategoria());
+		Categoria categoria = categoriaService.buscarPeloId(headers ,produtoRequest.getIdCategoria());
 		String urlImagem = imagemService.salvarImagem(produtoRequest.getImagem());
 
 		if(repository.existsByNome(produtoRequest.getNome())){
@@ -207,4 +207,21 @@ public class ProdutoService {
 		Produto produto = repository.findById(id).get();
 		return produto;
 	}
+
+    public ProdutoResponse buscarPeloId(HttpHeaders headers, Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoException {
+//		if(!loginService.verificaSeTokenValido(headers))
+//		throw new UsuarioNaoLogadoException();
+		Produto produto = buscaProduto(id);
+
+		ProdutoResponse produtoResponse = ProdutoResponse.builder()
+				.id(produto.getId())
+				.imagem(produto.getImagem())
+				.precoUnitario(produto.getPrecoUnitario())
+				.quantidade(produto.getQuantidade())
+				.descricao(produto.getDescricao())
+				.nomeCategoria(produto.getCategoria().getNome())
+				.nome(produto.getNome()).build();
+
+		return produtoResponse;
+    }
 }

@@ -2,9 +2,8 @@ package com.winningwomen.supermercadoYara.controller;
 
 import java.util.List;
 
-import com.winningwomen.supermercadoYara.exception.FuncaoJaExisteException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoEAdministradorException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
+import com.winningwomen.supermercadoYara.exception.*;
+import com.winningwomen.supermercadoYara.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,5 +31,10 @@ public class FuncaoController {
 	@GetMapping
 	public List<Funcao> listarTodasFuncoes(@RequestHeader HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
 		return funcaoService.listarTodosOrdemAlfabetica(headers);
+	}
+
+	@GetMapping("/{id}")
+	public Funcao buscarFuncao(@RequestHeader HttpHeaders headers, @PathVariable Long id) throws FuncaoNaoExisteIdException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		return funcaoService.buscarPeloId(headers, id);
 	}
 }
