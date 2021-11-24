@@ -1,0 +1,848 @@
+{
+	"info": {
+		"_postman_id": "97924777-de56-48a3-8384-819c792e5e52",
+		"name": "WW2021 - VILA YARA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "201: Cria Produto 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagem",
+									"type": "file",
+									"src": "/home/amanda/Imagens/bombom.jpeg"
+								},
+								{
+									"key": "nome",
+									"value": "Bombom caribes",
+									"type": "text"
+								},
+								{
+									"key": "quantidade",
+									"value": "150",
+									"type": "text"
+								},
+								{
+									"key": "precoUnitario",
+									"value": "2.00",
+									"type": "text"
+								},
+								{
+									"key": "idCategoria",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "descricao",
+									"value": "Bombom 10g",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/produtos",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200: Atualiza produto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagem",
+									"type": "file",
+									"src": "/home/amanda/Imagens/bombom2.jpeg"
+								},
+								{
+									"key": "nome",
+									"value": "Bombom caribe",
+									"type": "text"
+								},
+								{
+									"key": "quantidade",
+									"value": "150",
+									"type": "text"
+								},
+								{
+									"key": "precoUnitario",
+									"value": "2.00",
+									"type": "text"
+								},
+								{
+									"key": "idCategoria",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "descricao",
+									"value": "Bombom 10g",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/produtos/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200: Excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Crocante\",\n  \"quantidade\": 200,\n  \"precoUnitario\": 2.50,\n  \"idCategoria\": 1,\n  \"descricao\": \"Bombom Crocante 25g\",\n  \"imagem\": \"hello imagem ainda não sei fazer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produtos/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos",
+								"3"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200: Lista produtos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/produtos",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200: Busca produto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/produtos/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exporta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/produtos/exportar",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"produtos",
+								"exportar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "201: Cria categoria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Chocolate\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/categorias",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/categorias",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar pelo id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/categorias/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "201: Cria usuário",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "12345",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_name\": \"amanda\",\n    \"nome\":\"amanda\",\n    \"sobrenome\":\"lima\",\n    \"email\":\"teste@teste.com\",\n    \"senha\":\"1\",\n    \"funcao\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201: Cria usuário amanda",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"amanda\",\n    \"nome\":\"amanda\",\n    \"sobrenome\":\"lima\",\n    \"email\":\"amanda@vilayara.com\",\n    \"senha\":\"5151\",\n    \"nomeFuncao\":\"administrador\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/usuarios",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200: Alterar usuário amanda Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"amandaveredas\",\n    \"nome\":\"amanda\",\n    \"sobrenome\":\"lima\",\n    \"email\":\"amanda@vilayara.com\",\n    \"senha\":\"5353\",\n    \"nomeFuncao\":\"administrador\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201: Cria usuário madeus",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "12345",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"madeus\",\n    \"nome\":\"Madeus\",\n    \"sobrenome\":\"Anjos\",\n    \"email\":\"madeus@vilayara.com\",\n    \"senha\":\"yara123\",\n    \"nomeFuncao\":\"administrador\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/usuarios",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/usuarios",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login madeus",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"madeus@vilayara.com\",\n    \"senha\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/login",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login valmor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"valms@valms.com\",\n    \"senha\":\"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/login/logout",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"login",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funcao",
+			"item": [
+				{
+					"name": "Cria função",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"administrador\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/funcao",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"funcao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/funcao",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"funcao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar pelo id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/funcao/1",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"funcao",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recuperação senha",
+			"item": [
+				{
+					"name": "gera token recuperação",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"email\": \"madeus@vilayara.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/redefinicao/token",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"redefinicao",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cria nova senha",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"email\": \"madeus@vilayara.com\",\n     \"token\":1,\n     \"novaSenha\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://yarasupermercado.herokuapp.com/redefinicao",
+							"protocol": "https",
+							"host": [
+								"yarasupermercado",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"redefinicao"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
