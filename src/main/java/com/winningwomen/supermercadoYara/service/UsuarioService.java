@@ -28,7 +28,6 @@ public class UsuarioService {
         this.repository = repository;
         this.funcaoService = funcaoService;
         this.loginService = loginService;
-
     }
     
     
@@ -39,7 +38,6 @@ public class UsuarioService {
 
         if(repository.existsByEmail(usuarioRequest.getEmail()))
             throw new AmbiguidadeDeEmailsException(usuarioRequest.getEmail());
-
         
         Funcao funcao = funcaoService.buscarPeloNome(usuarioRequest.nomeFuncao());
         
@@ -56,6 +54,7 @@ public class UsuarioService {
         repository.save(usuario);
     }
 
+    
     public List<UsuarioResponse> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
         //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         List<Usuario> usuarios = repository.findAll();
@@ -77,6 +76,7 @@ public class UsuarioService {
         return listaUsuariosResponse;
     }
 
+    
     public UsuarioResponse atualizar(HttpHeaders headers, Long id, UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
     	//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         Usuario usuario = buscaUsuario(id);
@@ -114,7 +114,6 @@ public class UsuarioService {
     	return usuarioResponse;    	
     }
 
-
     
     public void excluir(HttpHeaders headers,Long id) throws UsuarioNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
         loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
@@ -123,17 +122,14 @@ public class UsuarioService {
          repository.deleteById(id);
     }
 
+    
     public Usuario buscaUsuarioPeloEmail(String email) throws UsuarioNaoExisteComEmailException {
         if(!repository.existsByEmail(email))
             throw new UsuarioNaoExisteComEmailException(email);
 
             return repository.findByEmailEquals(email);
-
-
     }
-
-
-
+    
     public void atualizarSenha(Long id, RedefineSenhaRequest redefineSenhaRequest) throws UsuarioNaoExisteException {
         Usuario usuario = buscaUsuario(id);
         usuario.setSenha(redefineSenhaRequest.getNovaSenha());

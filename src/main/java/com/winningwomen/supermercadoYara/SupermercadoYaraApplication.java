@@ -11,8 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class SupermercadoYaraApplication {
 
-	
-	
 	public static void main(String[] args) {
 		SpringApplication.run(SupermercadoYaraApplication.class, args);
 	}
