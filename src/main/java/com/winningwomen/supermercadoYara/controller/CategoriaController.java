@@ -1,9 +1,8 @@
 package com.winningwomen.supermercadoYara.controller;
 
 import com.winningwomen.supermercadoYara.dto.request.CategoriaRequest;
-import com.winningwomen.supermercadoYara.exception.AmbiguidadeDeNomesCategoriasException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoEAdministradorException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
+import com.winningwomen.supermercadoYara.dto.response.UsuarioResponse;
+import com.winningwomen.supermercadoYara.exception.*;
 import com.winningwomen.supermercadoYara.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -37,5 +36,10 @@ public class CategoriaController {
 	@GetMapping
 	public List<Categoria> listarTodasCategorias(@RequestHeader HttpHeaders headers) throws UsuarioNaoLogadoException {
 		return categoriaService.listarTodosOrdemAlfabetica(headers);
+	}
+
+	@GetMapping("/{id}")
+	public Categoria buscarCategoria(@RequestHeader HttpHeaders headers, @PathVariable Long id) throws CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+		return categoriaService.buscarPeloId(headers, id);
 	}
 }

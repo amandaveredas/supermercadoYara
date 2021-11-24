@@ -2,41 +2,38 @@ package com.winningwomen.supermercadoYara.service;
 
 import java.util.List;
 
-import com.winningwomen.supermercadoYara.exception.FuncaoJaExisteException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoEAdministradorException;
-import com.winningwomen.supermercadoYara.exception.UsuarioNaoLogadoException;
+import com.winningwomen.supermercadoYara.exception.*;
+import com.winningwomen.supermercadoYara.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.winningwomen.supermercadoYara.dto.request.FuncaoRequest;
-import com.winningwomen.supermercadoYara.exception.FuncaoNaoExisteException;
 import com.winningwomen.supermercadoYara.model.Funcao;
 import com.winningwomen.supermercadoYara.repository.FuncaoRepository;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 @Service
 public class FuncaoService {
-	private FuncaoRepository funcaoRepository;
+	private FuncaoRepository repository;
 	private LoginService loginService;
 
 	@Autowired
 	public FuncaoService(FuncaoRepository funcaoRepository, LoginService loginService) {
-		this.funcaoRepository= funcaoRepository;
+		this.repository = funcaoRepository;
 		this.loginService = loginService;
 	}
 	
 	public Funcao buscarPeloNome(String nomeFuncao) throws FuncaoNaoExisteException{
-		if(!funcaoRepository.existsByNomeIgnoringCase(nomeFuncao)) throw new FuncaoNaoExisteException(nomeFuncao);
-		return funcaoRepository.findByNomeIgnoringCase(nomeFuncao);
+		if(!repository.existsByNomeIgnoringCase(nomeFuncao)) throw new FuncaoNaoExisteException(nomeFuncao);
+		return repository.findByNomeIgnoringCase(nomeFuncao);
 	}
 	
 	public void cadastrar(HttpHeaders headers, FuncaoRequest funcaoRequest) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, FuncaoJaExisteException {
 		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
-		if(funcaoRepository.existsByNomeIgnoringCase(funcaoRequest.getNome()))
+		if(repository.existsByNomeIgnoringCase(funcaoRequest.getNome()))
 			throw new FuncaoJaExisteException(funcaoRequest.getNome());
 		Funcao funcao = new Funcao(funcaoRequest);
-		funcaoRepository.save(funcao);
+		repository.save(funcao);
 
 
 	}
@@ -44,6 +41,12 @@ public class FuncaoService {
 	public List<Funcao> listarTodosOrdemAlfabetica(HttpHeaders headers) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
 		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
 
-		return funcaoRepository.findAllByOrderByNomeAsc();
+		return repository.findAllByOrderByNomeAsc();
 	}
+
+    public Funcao buscarPeloId(HttpHeaders headers, Long id) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, FuncaoNaoExisteIdException {
+		//loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+		if(!repository.existsById(id)) throw new FuncaoNaoExisteIdException(id);
+		return repository.findById(id).get();
+    }
 }

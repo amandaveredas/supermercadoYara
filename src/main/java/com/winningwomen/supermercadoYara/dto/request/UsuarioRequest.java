@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Data
 public class UsuarioRequest {
@@ -25,9 +24,9 @@ public class UsuarioRequest {
     @NotEmpty(message = "Campo senha não pode ser vazio.")
     private String senha;
     @NotNull(message = "Campo funcao não pode ser nulo.")
-    private String funcao;
+    private String nomeFuncao;
 
     public String nomeFuncao() {
-        return funcao;
+        return nomeFuncao;
     }
 }

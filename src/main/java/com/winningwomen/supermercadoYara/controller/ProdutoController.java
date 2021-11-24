@@ -37,6 +37,11 @@ public class ProdutoController {
 		return produtoService.listarTodosOrdemAlfabetica(headers);
 	}
 
+	@GetMapping(value = "/{id}")
+	public ProdutoResponse buscarProdutoPeloId (@RequestHeader HttpHeaders headers,@PathVariable Long id) throws ProdutoNaoExisteException, UsuarioNaoLogadoException {
+		return produtoService.buscarPeloId(headers, id);
+	}
+
 	@PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
 	public ProdutoResponse alterarProduto(@RequestHeader HttpHeaders headers,@PathVariable Long id, @ModelAttribute @Valid ProdutoRequest produtoRequest) throws CategoriaNaoExisteException, ProdutoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeNomesProdutosException {
 		return produtoService.alterar(headers, id, produtoRequest);

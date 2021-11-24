@@ -67,7 +67,6 @@ public class UsuarioService {
                     .nome(u.getNome())
                     .sobrenome(u.getSobrenome())
                     .email(u.getEmail())
-                    .senha(u.getSenha())
                     .dataCriacao(u.getData_criacao())
                     .nomeFuncao(u.getFuncao().getNome())
                     .build();
@@ -108,7 +107,6 @@ public class UsuarioService {
     			.nomeFuncao(funcao.getNome())
     			.email(usuario.getEmail())
     			.sobrenome(usuario.getSobrenome())
-    			.senha(usuario.getSenha())
     			.dataCriacao(usuario.getData_criacao())
     			.userName(usuario.getUserName())
     			.build();
@@ -132,14 +130,6 @@ public class UsuarioService {
             return repository.findByEmailEquals(email);
     }
     
-    
-    public Usuario buscaUsuario(Long id) throws UsuarioNaoExisteException {
-        if(!repository.existsById(id)) throw new UsuarioNaoExisteException(id);
-        Usuario usuario = repository.findById(id).get();
-        return usuario;
-    }
-
-    
     public void atualizarSenha(Long id, RedefineSenhaRequest redefineSenhaRequest) throws UsuarioNaoExisteException {
         Usuario usuario = buscaUsuario(id);
         usuario.setSenha(redefineSenhaRequest.getNovaSenha());
@@ -149,7 +139,28 @@ public class UsuarioService {
     }
 
 
-    
+    public UsuarioResponse buscarPeloId(HttpHeaders headers, Long id) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, UsuarioNaoExisteException {
+//        loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
+        Usuario usuario = buscaUsuario(id);
+
+        UsuarioResponse usuarioResponse = UsuarioResponse.builder()
+                .id(usuario.getId())
+                .dataCriacao(usuario.getData_criacao())
+                .email(usuario.getEmail())
+                .nome(usuario.getNome())
+                .nomeFuncao(usuario.getFuncao().getNome())
+                .sobrenome(usuario.getSobrenome())
+                .userName(usuario.getUserName()).build();
+
+        return usuarioResponse;
+    }
+
+    private Usuario buscaUsuario(Long id) throws UsuarioNaoExisteException {
+
+        if(!repository.existsById(id)) throw new UsuarioNaoExisteException(id);
+        Usuario usuario = repository.findById(id).get();
+        return usuario;
+    }
 }
 
 

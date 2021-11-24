@@ -37,10 +37,11 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/{id}")
-	public Usuario getById(@PathVariable Long id) throws UsuarioNaoExisteException {
-		return usuarioService.buscaUsuario(id);
+	public UsuarioResponse buscarUsuario(@RequestHeader HttpHeaders headers, @PathVariable Long id) throws UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, UsuarioNaoExisteException {
+		return usuarioService.buscarPeloId(headers, id);
 	}
-	
+
+
 	@PutMapping("/{id}")
 	public UsuarioResponse alterarUsuario(@RequestHeader HttpHeaders headers, @PathVariable Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) throws AmbiguidadeDeNomesUsuariosException, UsuarioNaoExisteException, FuncaoNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException, AmbiguidadeDeEmailsException {
 		return usuarioService.atualizar(headers, id, usuarioRequest);

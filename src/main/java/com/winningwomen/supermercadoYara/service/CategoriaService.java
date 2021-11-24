@@ -24,7 +24,8 @@ public class CategoriaService {
         this.loginService = loginService;
     }
 
-   public Categoria buscarPeloId(long idCategoria) throws CategoriaNaoExisteException {
+   public Categoria buscarPeloId(HttpHeaders headers,long idCategoria) throws CategoriaNaoExisteException, UsuarioNaoEAdministradorException, UsuarioNaoLogadoException {
+       //loginService.verificaSeTokenValidoESeAdministradorELancaExcecoes(headers);
         if(!repository.existsById(idCategoria))
             throw new CategoriaNaoExisteException(idCategoria);
 
