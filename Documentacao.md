@@ -100,6 +100,27 @@ ___
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
 		* Body: Vazio
+		
+
+	1.6. Busca produto pelo id
+	 
+	 * Assinatura	 	
+	 	*  GET(/produtos/{id})
+ 
+	* Sem parâmetros de entrada
+	 	
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: ProdutoResponse
+
+	
+	* Comportamentos:
+	
+		* Caso o produto não seja localizado, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```"O produto com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrado.".```
+		
+		
 _____
 
 2. Categorias
@@ -136,11 +157,29 @@ _____
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
-		* Body: List < Categorias >
+		* Body: List < Categoria >
 	 		
 		
 	* Comportamentos:
 		*  Caso nenhuma categoria seja localizado, retorna uma lista vazia. 
+
+	2.3. Busca categoria pelo id
+	 
+	 * Assinatura	 	
+	 	*  GET(/categorias/{id})
+ 
+	* Sem parâmetros de entrada
+	 	
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: Categoria
+
+	
+	* Comportamentos:
+	
+		* Caso a categoria não seja localizada, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```"A categoria com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrada.".```
 		
 _____
 3. Usuários
@@ -236,6 +275,24 @@ _____
 		* Caso o usuário não seja localizado, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
 			* Mensagem: ```"O usuário com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrado.".```	
 
+	3.5. Busca usuário pelo id
+	 
+	 * Assinatura	 	
+	 	*  GET(/usuarios/{id})
+ 
+	* Sem parâmetros de entrada
+	 	
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: UsuarioResponse
+
+	
+	* Comportamentos:
+	
+		* Caso o usuário não seja localizado, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```"O usuário com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrado.".```
+
 ____
 4. Funções
 
@@ -246,7 +303,7 @@ ____
 	4.1. Cadastro de funções
 	 
 	 * Assinatura	 	
-	 	*  POST(/funcoes)
+	 	*  POST(/funcao)
  
 	* Parâmetros de entrada
 	 	
@@ -265,17 +322,35 @@ ____
 	4.2. Listagem de funções
 	 
 	 * Assinatura	 	
-	 	*  GET(/funcoes)
+	 	*  GET(/funcao)
  
 	* Sem parâmetros de entrada
 	 		 
 	* Saída esperada em caso de sucesso:
 		* Status: 200 OK
-		* Body: List < Funcoes >
+		* Body: List < Funcao >
 	 		
 		
 	* Comportamentos:
 		*  Caso nenhuma categoria seja localizado, retorna uma lista vazia. 
+
+	4.3. Busca função pelo id
+	 
+	 * Assinatura	 	
+	 	*  GET(/funcao/{id})
+ 
+	* Sem parâmetros de entrada
+	 	
+	 		 
+	* Saída esperada em caso de sucesso:
+		* Status: 200 OK
+		* Body: Funcao
+
+	
+	* Comportamentos:
+	
+		* Caso a função não seja localizada, deve lançar uma exceção com o status 404 e uma mensagem informando o problema.
+			* Mensagem: ```"A função com id '{SUBSTITUIR-PELO-ID-INFORMADO}' não foi encontrada.".```
 
 ___
 5. Login
@@ -342,7 +417,7 @@ ___
 	6.2. Redefinir Senha
 	 
 	 * Assinatura	 	
-	 	*  GET(/login/logout)
+	 	*  POST(/redefinicao)
  
 	* Parâmetros de entrada
 	 	
